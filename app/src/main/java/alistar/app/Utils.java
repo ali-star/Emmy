@@ -13,10 +13,9 @@ import android.net.*;
 import android.os.*;
 import android.provider.*;
 import android.telephony.*;
-import android.telephony.gsm.*;
 import android.util.*;
 import com.google.android.gms.maps.model.*;
-import com.readystatesoftware.notificationlog.*;
+
 import java.io.*;
 import java.lang.ref.*;
 import java.nio.channels.*;
@@ -254,9 +253,9 @@ public class Utils
 		memory.saveAliFeeling(feeling, note, System.currentTimeMillis(), emoji);
 	}
 
-	public List<AliEmotion> getAliEmotions()
+	public List<AliEmotion> getEmotions(int count)
 	{
-		return new Memory(context).getAliEmotions();
+		return new Memory(context).getEmotions(count);
 	}
 
 	public void initFolders()

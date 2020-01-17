@@ -20,6 +20,8 @@ import alistar.app.alarm.*;
 import android.graphics.drawable.*;
 import java.text.*;
 import java.util.*;
+
+import alistar.app.brain.anomalyDetection.anomaly.DetectAnoms;
 import alistar.app.map.*;
 import com.nanotasks.*;
 import alistar.app.brain.*;
@@ -305,7 +307,7 @@ public class MainActivity extends Activity
 				}
 		});
 
-		aliEmotionsChart.setData(utils.getAliEmotions());
+		initEmotionsChart(aliEmotionsChart);
 		
 		/*LinearLightSwitch mSwitch = (LinearLightSwitch) findViewById(R.id.mSwitch);
 		mSwitch.setOnSwitchListenear(new LinearLightSwitch.SwitchListenear()
@@ -438,6 +440,43 @@ public class MainActivity extends Activity
 			//startService(new Intent(this, MyService.class).putExtra("command", Utils.WAKEFUL_SEARCH_NEARBY_PLACE));
 
     }
+
+	private void initEmotionsChart(AliEmotionsChart aliEmotionsChart) {
+		List<AliEmotion> chartEmotions = utils.getEmotions(24);
+
+		List<AliEmotion> detectAnomsEmotions = utils.getEmotions(500);
+
+		DetectAnoms.Config config = new DetectAnoms.Config();
+		config.setMaxAnoms(0.2);
+		config.setAnomsThreshold(0.02);
+		config.setAlpha(0.05);
+		config.setNumObsPerPeriod(100);
+
+		DetectAnoms detectAnoms = new DetectAnoms(config);
+
+		long[] times = new long[detectAnomsEmotions.size()];
+		double[] series = new double[detectAnomsEmotions.size()];
+		for (int i = 0; i < detectAnomsEmotions.size(); i++) {
+			times[i] = detectAnomsEmotions.get(i).getDate();
+			series[i] = detectAnomsEmotions.get(i).getFeeling();
+		}
+
+		try {
+			DetectAnoms.ANOMSResult anomsResult = detectAnoms.anomalyDetection(times, series);
+			for (long index : anomsResult.getAnomsIndex()) {
+				for (AliEmotion aliEmotion : chartEmotions) {
+					if (aliEmotion.getDate() == detectAnomsEmotions.get((int) index).getDate()) {
+						aliEmotion.setAnomaly(true);
+					}
+				}
+				Log.i("anomaly detected", "feeling: " + detectAnomsEmotions.get((int) index).getFeeling() + " index: " + index);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		aliEmotionsChart.setData(chartEmotions);
+	}
 
 	private void checkGPS()
 	{

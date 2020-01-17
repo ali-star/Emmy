@@ -55,13 +55,11 @@ public class AliEmotionsChart extends View
 		linePaint.setColor(Color.parseColor("#404c4e73"));
 		linePaint.setStyle(Paint.Style.STROKE);
 		linePaint.setStrokeWidth(1);
-		//CornerPathEffect cpe = new CornerPathEffect(12);
+
 		chartPaint.setColor(Color.parseColor("#6C91FA"));
 		chartPaint.setStyle(Paint.Style.STROKE);
 		chartPaint.setStrokeWidth(2);
 		chartPaint.setAntiAlias(true);
-		//chartPaint.setPathEffect(cpe);
-		//chartPaint.setShadowLayer(6, 0, 4, Color.parseColor("#60000000"));
 
 		shadowPaint.setColor(Color.TRANSPARENT);
 		shadowPaint.setStyle(Paint.Style.STROKE);
@@ -73,8 +71,10 @@ public class AliEmotionsChart extends View
 		fillPaint.setStyle(Paint.Style.FILL);
 		fillPaint.setStrokeWidth(3);
 		fillPaint.setAntiAlias(true);
-		//fillPaint.setPathEffect(cpe);
-		//tchartPaint.setShadowLayer(6, 0, 4, Color.parseColor("#60000000"));
+
+		circlePaint.setColor(Color.parseColor("#FFD969"));
+		circlePaint.setStyle(Paint.Style.FILL);
+		circlePaint.setAntiAlias(true);
 
 		points = new ArrayList<Point>();
 	}
@@ -105,7 +105,7 @@ public class AliEmotionsChart extends View
 		step = (width - (padding * 2)) / (pointsOnScreen - 1);
 
 		valueHeight = (height - (padding) - (chartPaint.getStrokeWidth() * 3f)) / 11f;
-		float valueWidth = (width - (padding * 2)) / pointsOnScreen;
+		float valueWidth = (width - (padding * 2)) / (pointsOnScreen - 1);
 		//draw bg lines
 		// canvas.drawLine(width - padding, -(-5 * valueHeight) + halfHeight, width - padding, -(5 * valueHeight) + halfHeight, linePaint);
 		// canvas.drawLine(padding, -(-5 * valueHeight) + halfHeight, padding, -(5 * valueHeight) + halfHeight, linePaint);
@@ -113,8 +113,8 @@ public class AliEmotionsChart extends View
 		for (int i = -5; i <= 5; i++)
 			canvas.drawLine(padding, -(i * valueHeight) + halfHeight, width - padding, -(i * valueHeight) + halfHeight, i == -5 || i == 5 || i == 0 ? baseLinePaint : linePaint);
 
-		for (int i = 0; i <= pointsOnScreen; i++)
-			canvas.drawLine(padding + (i * valueWidth), -(-5 * valueHeight) + halfHeight, padding + (i * valueWidth), -(5 * valueHeight) + halfHeight, i == 0 || i == pointsOnScreen ? baseLinePaint : linePaint);
+		for (int i = 0; i < pointsOnScreen; i++)
+			canvas.drawLine(padding + (i * valueWidth), -(-5 * valueHeight) + halfHeight, padding + (i * valueWidth), -(5 * valueHeight) + halfHeight, i == 0 || i == pointsOnScreen - 1 ? baseLinePaint : linePaint);
 
 		//draw chart
 		AliEmotion ae = null;
@@ -133,16 +133,17 @@ public class AliEmotionsChart extends View
 				}
 				if (i > 0 & i != data.size() - 1 & i < data.size())
 				{
-					x = padding + ((i) * step);
+					x = padding + (((float) i) * step);
 				}
 				if (i == data.size() - 1)
 				{
-					x = padding + (i * step);
+					x = padding + ((float) i * step);
 				}
 
 				y = -(ae.getFeeling() * valueHeight) + halfHeight;
 
 				point.set(x, y);
+				point.isAnomaly = ae.isAnomaly();
 				points.add(point);
 			}
 		}
@@ -160,14 +161,17 @@ public class AliEmotionsChart extends View
 		path.moveTo(point0.x, point0.y);
 		shadowPath.moveTo(point0.x, point0.y);
 		fillPath.moveTo(point0.x, point0.y);
+
 		for (int i = 0; i < points.size(); i++)
 		{
 			Point point = points.get(i);
 			path.lineTo(point.x, point.y);
 			shadowPath.lineTo(point.x, point.y);
 			fillPath.lineTo(point.x, point.y);
+			if (point.isAnomaly)
+				canvas.drawCircle(point.x, point.y, 3, circlePaint);
 		}
-		//path.close();
+
 		fillPath.lineTo((padding) + ((points.size() - 1) * step), height - padding);
 		fillPath.lineTo(padding, height - padding);
 		fillPath.lineTo(point0.x, point0.y);
@@ -175,18 +179,28 @@ public class AliEmotionsChart extends View
 		canvas.drawPath(fillPath, fillPaint);
 		canvas.drawPath(shadowPath, shadowPaint);
 		canvas.drawPath(path, chartPaint);
+
+		for (int i = 0; i < points.size(); i++) {
+			Point point = points.get(i);
+			if (point.isAnomaly)
+				canvas.drawCircle(point.x, point.y, 3, circlePaint);
+		}
 	}
 
 	class Point {
 
 		float x;
 		float y;
+		boolean isAnomaly;
 
 		void set(float x, float y) {
 			this.x = x;
 			this.y = y;
 		}
 
+		void setAnomaly(boolean isAnomaly) {
+			this.isAnomaly = isAnomaly;
+		}
 	}
 
 }

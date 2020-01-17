@@ -123,11 +123,11 @@ public class Memory extends SQLiteOpenHelper
 		Log.d ( "[Memory] Emotions", "Ali emotion saved, value:" + String.valueOf ( feeling ) );
 	}
 
-	public List<AliEmotion> getAliEmotions ( )
+	public List<AliEmotion> getEmotions(int count)
 	{
 		List<AliEmotion> data = new ArrayList<AliEmotion> ( );
 		SQLiteDatabase db = this.getWritableDatabase ( );
-		Cursor cursor = db.rawQuery ( "SELECT * FROM " + TABLE_ALI_EMOTIONS + " ORDER BY " + KEY_ID + " DESC LIMIT 24", null );
+		Cursor cursor = db.rawQuery ( "SELECT * FROM " + TABLE_ALI_EMOTIONS + " ORDER BY " + KEY_ID + " DESC LIMIT " + count, null );
 
 		if ( !cursor.moveToFirst ( ) )
 			return null;

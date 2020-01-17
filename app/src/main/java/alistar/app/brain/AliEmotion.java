@@ -6,6 +6,7 @@ public class AliEmotion
 	private int id, feeling;
 	private String note, emoji;
 	private long date;
+	private boolean isAnomaly;
 	
 	public AliEmotion(int id, int feeling, long date, String note, String emoji)
 	{
@@ -59,5 +60,13 @@ public class AliEmotion
 	public void setEmoji(String emoji)
 	{
 		this.emoji = emoji;
+	}
+
+	public boolean isAnomaly() {
+		return isAnomaly;
+	}
+
+	public void setAnomaly(boolean anomaly) {
+		isAnomaly = anomaly;
 	}
 }
