@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:gravity="bottom">
+
+	<RelativeLayout
+		android:id="@+id/sara_base"
+		android:layout_height="36dp"
+		android:layout_width="match_parent"
+		android:layout_gravity="bottom">
+
+		<RelativeLayout
+			android:layout_height="36dp"
+			android:layout_width="match_parent"
+			android:id="@+id/sara_frame"
+			android:background="#000000"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:visibility="invisible">
+
+			<alistar.app.SaraView
+				android:layout_width="26dp"
+				android:layout_height="26dp"
+				android:id="@+id/sara"
+				android:layout_centerVertical="true"/>
+
+			<TextView
+				android:id="@+id/sara_tv"
+				android:layout_height="36dp"
+				android:layout_width="match_parent"
+				android:text=""
+				android:textSize="12sp"
+				android:layout_marginLeft="6dp"
+				android:layout_toRightOf="@id/sara"
+				android:gravity="left|center"
+				android:textColor="#6D7088"
+				android:layout_centerVertical="false"
+				android:layout_alignParentBottom="true"/>
+
+		</RelativeLayout>
+
+	</RelativeLayout>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Exit"
+		android:id="@+id/exit"
+		android:visibility="gone"/>
+
+</FrameLayout>
+

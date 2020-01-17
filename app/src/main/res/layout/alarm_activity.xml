@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#000000">
+
+	<TextView
+		android:id="@+id/x_tv"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="x"
+		android:layout_margin="10dp"
+		android:textColor="#4A5761"
+		android:visibility="gone"/>
+
+	<TextView
+		android:id="@+id/y_tv"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="y"
+		android:layout_margin="10dp"
+		android:layout_toRightOf="@id/x_tv"
+		android:textColor="#4A5761"
+		android:visibility="gone"/>
+
+	<LinearLayout
+		android:layout_height="300dp"
+		android:layout_width="300dp"
+		android:layout_centerInParent="true"
+		android:orientation="vertical"
+		android:gravity="center"
+		android:id="@+id/touch_view">
+
+		<alistar.app.SaraView
+			android:id="@+id/sara"
+			android:layout_height="80dp"
+			android:layout_width="80dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Text"
+			android:textSize="19sp"
+			android:layout_margin="10dp"
+			android:id="@+id/type_text"
+			android:textColor="#4A5761"/>
+
+	</LinearLayout>
+
+</RelativeLayout>
+

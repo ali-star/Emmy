@@ -1,0 +1,32 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:layout_height="64dp"
+		android:layout_width="match_parent"
+		android:background="#6994FD">
+
+		<su.levenetc.android.badgeview.BadgeView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:badgeTextSize="12sp"
+			android:id="@+id/badge"
+			app:badgeTextColor="#6994FD"
+			app:badgeBackgroundColor="#ffffff"
+			android:layout_marginRight="6dp"
+			android:layout_centerInParent="true"/>
+
+	</RelativeLayout>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="1">
+
+	</androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#1D1F2E"
+	tools:context="alistar.app.ear.RecordingActivity">
+
+	<RelativeLayout
+		android:background="#6994FD"
+		android:id="@+id/sara_base"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true">
+
+		<FrameLayout
+			android:id="@+id/sara_frame"
+			android:layout_height="58dp"
+			android:layout_width="58dp"
+			android:layout_marginLeft="10dp">
+
+			<alistar.app.SaraView
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:id="@+id/sara"
+				android:layout_gravity="center"/>
+
+		</FrameLayout>
+
+		<TextView
+			android:id="@+id/status"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text=""
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@id/sara_frame"
+			android:layout_marginBottom="10dp"
+			android:gravity="left|center"
+			android:textColor="#D8DAE8"
+			android:layout_marginTop="10dp"
+			android:layout_centerVertical="true"
+			android:padding="3dp"/>
+
+	</RelativeLayout>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content"
+		android:text="VOICE RECORDER"
+		android:layout_centerHorizontal="true"
+		android:layout_margin="10dp"
+		android:textColor="#D8DAE8"
+		android:id="@+id/activityrecordingTextView1"/>
+
+	<EditText
+		android:layout_height="48dp"
+		android:layout_width="match_parent"
+		android:ems="10"
+		android:layout_above="@id/sara_base"
+		android:hint="Recording Name"
+		android:padding="6dp"
+		android:textSize="14sp"
+		android:background="#5474C4"
+		android:id="@+id/recording_name"
+		android:textColor="#D8DAE8"
+		android:textColorHint="#D8DAE8"/>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/activityrecordingTextView1"
+		android:layout_above="@id/recording_name">
+
+	</androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>
+

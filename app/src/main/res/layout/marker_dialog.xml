@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:gravity="center">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="New Place"
+		android:layout_margin="20dp"
+		android:textSize="19sp"
+		android:id="@+id/dialog_title"
+		android:textColor="#FFFFFF"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:layout_width="200dp"
+		android:ems="10"
+		android:id="@+id/marker_name_et"
+		android:textColor="#FFFFFF"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:layout_width="200dp"
+		android:ems="10"
+		android:id="@+id/marker_desription_et"
+		android:layout_marginTop="10dp"
+		android:textColor="#FFFFFF"/>
+
+	<LinearLayout
+		android:layout_height="48dp"
+		android:layout_width="200dp"
+		android:orientation="horizontal"
+		android:layout_marginTop="10dp"
+		android:gravity="center">
+
+		<EditText
+			android:layout_height="wrap_content"
+			android:inputType="numberSigned"
+			android:layout_width="100dp"
+			android:ems="10"
+			android:id="@+id/distance"
+			android:textColor="#FFFFFF"/>
+
+		<CheckBox
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Alart"
+			android:layout_margin="10dp"
+			android:id="@+id/marker_alart"
+			android:textColor="#FFFFFF"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_height="48dp"
+		android:layout_width="200dp"
+		android:orientation="horizontal">
+
+		<CheckBox
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Star"
+			android:layout_margin="10dp"
+			android:id="@+id/marker_star"
+			android:textColor="#FFFFFF"/>
+
+		<TextView
+			android:layout_height="match_parent"
+			android:layout_width="100dp"
+			android:text="SAVE"
+			android:layout_gravity="right|center"
+			android:gravity="center"
+			android:textStyle="bold"
+			android:id="@+id/save_marker"
+			android:textColor="#FFFFFF"/>
+
+	</LinearLayout>
+
+	<TextView
+		android:layout_height="48dp"
+		android:layout_width="200dp"
+		android:text="DELETE"
+		android:layout_gravity="center"
+		android:gravity="center"
+		android:textStyle="bold"
+		android:id="@+id/delete_marker"
+		android:textColor="#FFFFFF"
+		android:visibility="invisible"/>
+
+</LinearLayout>
+

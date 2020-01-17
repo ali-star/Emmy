@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="swipe-layout-1.0.14">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/ru.rambler.android/swipe-layout/1.0.14/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/ru.rambler.android/swipe-layout/1.0.14/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.rambler.android/swipe-layout/1.0.14/5e3cc4dca1fd04625aa5fa00f2d9634526777f48/swipe-layout-1.0.14-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

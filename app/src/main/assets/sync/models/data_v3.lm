@@ -1,0 +1,177 @@
+Language model created by QuickLM on Fri Dec 30 03:48:36 EST 2016
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 38 sentences and 40 words
+
+\data\
+ngram 1=40
+ngram 2=76
+ngram 3=38
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-2.3579 ALARM -0.2218
+-2.3579 EIGHT -0.2218
+-2.3579 EMOTION -0.2218
+-2.3579 FILING -0.2218
+-2.3579 FIND -0.2218
+-2.3579 FIVE -0.2218
+-2.3579 FOUR -0.2218
+-2.3579 HEY -0.2218
+-2.3579 LISTEN -0.2218
+-2.3579 LOCATION -0.2218
+-2.3579 LOCK -0.2218
+-2.3579 MY -0.2218
+-2.3579 NEGATIVE -0.2218
+-2.3579 NEW -0.2218
+-2.3579 NINE -0.2218
+-2.3579 NOW -0.2218
+-2.3579 OK -0.2218
+-2.3579 OLD -0.2218
+-2.3579 ONE -0.2218
+-2.3579 POSITIVE -0.2218
+-2.3579 RECORD -0.2218
+-2.3579 SARA -0.2218
+-2.3579 SAVE -0.2218
+-2.3579 SCAN -0.2218
+-2.3579 SCREEN -0.2218
+-2.3579 SET -0.2218
+-2.3579 SEVEN -0.2218
+-2.3579 SIX -0.2218
+-2.3579 TEN -0.2218
+-2.3579 THREE -0.2218
+-2.3579 TODAY -0.2218
+-2.3579 TOMORROW -0.2218
+-2.3579 TOW -0.2218
+-2.3579 VALUE -0.2218
+-2.3579 WAKEUP -0.2218
+-2.3579 WHERE -0.2218
+-2.3579 YESTERDAY -0.2218
+-2.3579 YOU -0.2218
+
+\2-grams:
+-1.8808 <s> ALARM 0.0000
+-1.8808 <s> EIGHT 0.0000
+-1.8808 <s> EMOTION 0.0000
+-1.8808 <s> FILING 0.0000
+-1.8808 <s> FIND 0.0000
+-1.8808 <s> FIVE 0.0000
+-1.8808 <s> FOUR 0.0000
+-1.8808 <s> HEY 0.0000
+-1.8808 <s> LISTEN 0.0000
+-1.8808 <s> LOCATION 0.0000
+-1.8808 <s> LOCK 0.0000
+-1.8808 <s> MY 0.0000
+-1.8808 <s> NEGATIVE 0.0000
+-1.8808 <s> NEW 0.0000
+-1.8808 <s> NINE 0.0000
+-1.8808 <s> NOW 0.0000
+-1.8808 <s> OK 0.0000
+-1.8808 <s> OLD 0.0000
+-1.8808 <s> ONE 0.0000
+-1.8808 <s> POSITIVE 0.0000
+-1.8808 <s> RECORD 0.0000
+-1.8808 <s> SARA 0.0000
+-1.8808 <s> SAVE 0.0000
+-1.8808 <s> SCAN 0.0000
+-1.8808 <s> SCREEN 0.0000
+-1.8808 <s> SET 0.0000
+-1.8808 <s> SEVEN 0.0000
+-1.8808 <s> SIX 0.0000
+-1.8808 <s> TEN 0.0000
+-1.8808 <s> THREE 0.0000
+-1.8808 <s> TODAY 0.0000
+-1.8808 <s> TOMORROW 0.0000
+-1.8808 <s> TOW 0.0000
+-1.8808 <s> VALUE 0.0000
+-1.8808 <s> WAKEUP 0.0000
+-1.8808 <s> WHERE 0.0000
+-1.8808 <s> YESTERDAY 0.0000
+-1.8808 <s> YOU 0.0000
+-0.3010 ALARM </s> -0.3010
+-0.3010 EIGHT </s> -0.3010
+-0.3010 EMOTION </s> -0.3010
+-0.3010 FILING </s> -0.3010
+-0.3010 FIND </s> -0.3010
+-0.3010 FIVE </s> -0.3010
+-0.3010 FOUR </s> -0.3010
+-0.3010 HEY </s> -0.3010
+-0.3010 LISTEN </s> -0.3010
+-0.3010 LOCATION </s> -0.3010
+-0.3010 LOCK </s> -0.3010
+-0.3010 MY </s> -0.3010
+-0.3010 NEGATIVE </s> -0.3010
+-0.3010 NEW </s> -0.3010
+-0.3010 NINE </s> -0.3010
+-0.3010 NOW </s> -0.3010
+-0.3010 OK </s> -0.3010
+-0.3010 OLD </s> -0.3010
+-0.3010 ONE </s> -0.3010
+-0.3010 POSITIVE </s> -0.3010
+-0.3010 RECORD </s> -0.3010
+-0.3010 SARA </s> -0.3010
+-0.3010 SAVE </s> -0.3010
+-0.3010 SCAN </s> -0.3010
+-0.3010 SCREEN </s> -0.3010
+-0.3010 SET </s> -0.3010
+-0.3010 SEVEN </s> -0.3010
+-0.3010 SIX </s> -0.3010
+-0.3010 TEN </s> -0.3010
+-0.3010 THREE </s> -0.3010
+-0.3010 TODAY </s> -0.3010
+-0.3010 TOMORROW </s> -0.3010
+-0.3010 TOW </s> -0.3010
+-0.3010 VALUE </s> -0.3010
+-0.3010 WAKEUP </s> -0.3010
+-0.3010 WHERE </s> -0.3010
+-0.3010 YESTERDAY </s> -0.3010
+-0.3010 YOU </s> -0.3010
+
+\3-grams:
+-0.3010 <s> ALARM </s>
+-0.3010 <s> EIGHT </s>
+-0.3010 <s> EMOTION </s>
+-0.3010 <s> FILING </s>
+-0.3010 <s> FIND </s>
+-0.3010 <s> FIVE </s>
+-0.3010 <s> FOUR </s>
+-0.3010 <s> HEY </s>
+-0.3010 <s> LISTEN </s>
+-0.3010 <s> LOCATION </s>
+-0.3010 <s> LOCK </s>
+-0.3010 <s> MY </s>
+-0.3010 <s> NEGATIVE </s>
+-0.3010 <s> NEW </s>
+-0.3010 <s> NINE </s>
+-0.3010 <s> NOW </s>
+-0.3010 <s> OK </s>
+-0.3010 <s> OLD </s>
+-0.3010 <s> ONE </s>
+-0.3010 <s> POSITIVE </s>
+-0.3010 <s> RECORD </s>
+-0.3010 <s> SARA </s>
+-0.3010 <s> SAVE </s>
+-0.3010 <s> SCAN </s>
+-0.3010 <s> SCREEN </s>
+-0.3010 <s> SET </s>
+-0.3010 <s> SEVEN </s>
+-0.3010 <s> SIX </s>
+-0.3010 <s> TEN </s>
+-0.3010 <s> THREE </s>
+-0.3010 <s> TODAY </s>
+-0.3010 <s> TOMORROW </s>
+-0.3010 <s> TOW </s>
+-0.3010 <s> VALUE </s>
+-0.3010 <s> WAKEUP </s>
+-0.3010 <s> WHERE </s>
+-0.3010 <s> YESTERDAY </s>
+-0.3010 <s> YOU </s>
+
+\end\

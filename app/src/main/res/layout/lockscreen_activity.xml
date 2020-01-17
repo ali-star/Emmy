@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="#000000"
+	android:id="@+id/touch_base">
+	
+	<alistar.app.screen_lock.BackgroundEffect
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:id="@+id/bg_effect"/>
+
+	<LinearLayout
+		android:layout_height="64dp"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal"
+		android:layout_marginBottom="10dp"
+		android:layout_alignParentTop="true"
+		android:gravity="left|center"
+		android:layout_margin="10dp">
+
+		<alistar.app.ColoredImageView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:src="@drawable/ic_fiber_manual_record_white_24dp"
+			app:setColor="#A2EFCF"
+			android:id="@+id/ready"/>
+
+	</LinearLayout>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Unlock"
+		android:alpha="0"
+		android:background="#00000000"
+		android:id="@+id/unlock"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true"
+		android:visibility="gone"/>
+
+	<RelativeLayout
+		android:id="@+id/sara_base"
+		android:layout_height="54dp"
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true">
+
+		<FrameLayout
+			android:id="@+id/sara_frame"
+			android:layout_height="48dp"
+			android:layout_width="48dp"
+			android:layout_marginLeft="10dp"
+			android:layout_centerVertical="true">
+
+			<alistar.app.SaraView
+				android:layout_width="39dp"
+				android:layout_height="39dp"
+				android:id="@+id/sara"
+				android:layout_gravity="center"/>
+
+		</FrameLayout>
+
+		<TextView
+			android:id="@+id/sara_tv"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text=""
+			android:gravity="left|center"
+			android:textColor="#D8DAE8"
+			android:padding="3dp"
+			android:textSize="12sp"
+			android:layout_toRightOf="@id/sara_frame"
+			android:layout_centerVertical="true"/>
+
+		<LinearLayout
+			android:id="@+id/music_control_base"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:visibility="invisible"
+			android:layout_marginRight="33dp">
+
+			<alistar.app.ColoredImageView
+				android:layout_height="36dp"
+				android:layout_width="36dp"
+				android:src="@drawable/ic_expand_less_white_48dp"
+				android:id="@+id/music_previous"
+				android:rotation="-90"
+				app:setColor="#FF801E"
+				android:layout_marginRight="10dp"/>
+
+			<alistar.app.ColoredImageView
+				android:layout_height="36dp"
+				android:layout_width="36dp"
+				app:setColor="#FF801E"
+				android:src="@drawable/ic_pause_white_48dp"
+				android:id="@+id/music_play_pause"/>
+
+			<alistar.app.ColoredImageView
+				android:layout_height="36dp"
+				android:layout_width="36dp"
+				android:src="@drawable/ic_expand_less_white_48dp"
+				android:id="@+id/music_next"
+				android:rotation="90"
+				app:setColor="#FF801E"
+				android:layout_marginLeft="10dp"/>
+
+		</LinearLayout>
+
+		<alistar.app.ColoredImageView
+			android:layout_height="18dp"
+			android:layout_width="18dp"
+			android:src="@drawable/ic_music_note_white_48dp"
+			android:id="@+id/music_start"
+			app:setColor="#FF801E"
+			android:layout_marginRight="36dp"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentBottom="true"
+			android:layout_marginBottom="12dp"/>
+
+	</RelativeLayout>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:text="12:00"
+		android:textSize="47sp"
+		android:textColor="#FFFFFF"
+		android:layout_alignParentRight="true"
+		android:layout_margin="10dp"
+		android:id="@+id/time"/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true"
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="12dp"
+		android:gravity="center"
+		android:orientation="vertical">
+
+		<alistar.app.ui.CircularBattryLevel
+			android:id="@+id/battry_level"
+			android:layout_width="12dp"
+			android:layout_height="70dp" />
+
+		<alistar.app.ColoredImageView
+			android:layout_width="18dp"
+			android:layout_height="18dp"
+			android:src="@drawable/ic_battery_std_black_48dp"
+			app:setColor="#FFFFFF" />
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="48dp"
+		android:layout_marginLeft="10dp"
+		android:layout_above="@id/sara_base"
+		android:orientation="vertical"
+		android:gravity="center">
+
+		<alistar.app.ColoredImageView
+			android:layout_height="38dp"
+			android:layout_width="38dp"
+			android:src="@drawable/ic_import_export_white_48dp"
+			app:setColor="#0980AF"
+			android:id="@+id/data_icon"
+			android:visibility="gone"
+			android:padding="8dp"/>
+
+		<alistar.app.ColoredImageView
+			android:layout_height="38dp"
+			android:layout_width="38dp"
+			android:src="@drawable/ic_textsms_white_48dp"
+			app:setColor="#FFB500"
+			android:id="@+id/new_message_icon"
+			android:visibility="gone"
+			android:padding="8dp"/>
+
+		<alistar.app.ColoredImageView
+			android:layout_height="38dp"
+			android:layout_width="38dp"
+			android:src="@drawable/ic_phone_missed_white_48dp"
+			app:setColor="#FA3146"
+			android:id="@+id/missed_call_icon"
+			android:visibility="gone"
+			android:padding="8dp"/>
+
+	</LinearLayout>
+
+</RelativeLayout>
+

@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:background="#1D1F2E"
+    android:orientation="vertical">
+	
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="LOCATION HISTORY"
+		android:layout_gravity="left"
+		android:layout_marginTop="6dp"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="6dp"
+		android:textSize="12sp"
+		android:textColor="#D8DAE8"
+		android:id="@+id/mainTextView3"/>
+	
+	<LinearLayout
+		android:layout_height="48dp"
+		android:layout_width="match_parent"
+		android:background="#313250"
+		android:orientation="horizontal"
+		android:layout_marginTop="10dp">
+
+		<TextView
+			android:layout_height="match_parent"
+			android:layout_width="0dp"
+			android:text="PLACE"
+			android:layout_weight="1.1"
+			android:gravity="left|center"
+			android:layout_marginLeft="10dp"
+			android:textColor="#D8DAE8"/>
+
+		<View
+			android:layout_height="match_parent"
+			android:layout_width="1dp"
+			android:background="#904C4E73"
+			android:layout_marginRight="10dp"/>
+
+		<TextView
+			android:layout_height="match_parent"
+			android:layout_width="0dp"
+			android:text="DATE"
+			android:layout_alignParentRight="true"
+			android:layout_weight="0.9"
+			android:gravity="left|center"
+			android:layout_marginRight="10dp"
+			android:textColor="#D8DAE8"/>
+
+	</LinearLayout>
+	
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+	</androidx.recyclerview.widget.RecyclerView>
+	
+    
+</LinearLayout>

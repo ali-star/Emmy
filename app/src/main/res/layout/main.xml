@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#1D1F2E"
+	android:layout_weight="1.0">
+
+	<RelativeLayout
+		android:layout_height="36dp"
+		android:layout_width="match_parent"
+		android:background="#6994FD"
+		android:id="@+id/mainRelativeLayout1">
+
+		<alistar.app.ColoredImageView
+			android:id="@+id/actionBarIcon"
+			android:layout_height="36dp"
+			android:layout_width="36dp"
+			android:src="@drawable/app_icon_m"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="8dp"
+			app:setColor="#CBDAFF"
+			android:padding="6dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Sara"
+			android:layout_toRightOf="@id/actionBarIcon"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="6dp"
+			android:textColor="#FFFFFF"/>
+
+		<su.levenetc.android.badgeview.BadgeView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:badgeTextSize="12sp"
+			android:id="@+id/badge"
+			app:badgeTextColor="#6994FD"
+			app:badgeBackgroundColor="#ffffff"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="6dp"/>
+
+	</RelativeLayout>
+
+	<ScrollView
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:layout_below="@id/mainRelativeLayout1"
+		android:id="@+id/scrollView">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:padding="10dp"
+			android:orientation="vertical">
+
+			<RelativeLayout
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_below="@id/mainRelativeLayout1"
+				android:background="#27273F"
+				android:id="@+id/mainRelativeLayout2">
+
+				<TextView
+					android:layout_height="36dp"
+					android:layout_width="wrap_content"
+					android:text="sim 1 serial"
+					android:layout_below="@id/mainRelativeLayout1"
+					android:id="@+id/s1s"
+					android:background="#00000000"
+					android:textSize="10sp"
+					android:textColor="#448AFF"
+					android:layout_alignParentRight="true"
+					android:gravity="center"
+					android:padding="10dp"/>
+
+				<TextView
+					android:id="@+id/s1b"
+					android:layout_height="36dp"
+					android:layout_width="wrap_content"
+					android:text="Sim 1"
+					android:gravity="center"
+					android:textSize="10sp"
+					android:padding="10dp"
+					android:textColor="#6E6FA7"/>
+
+				<RelativeLayout
+					android:layout_height=".5dp"
+					android:layout_width="match_parent"
+					android:layout_below="@id/s1b"
+					android:id="@+id/mainRelativeLayout4"
+					android:background="#904C4E73"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:layout_height="36dp"
+					android:layout_width="wrap_content"
+					android:text="sim 2 serial"
+					android:id="@+id/s2s"
+					android:background="#00000000"
+					android:textSize="10sp"
+					android:textColor="#448AFF"
+					android:layout_below="@id/mainRelativeLayout4"
+					android:layout_alignParentRight="true"
+					android:gravity="center"
+					android:padding="10dp"/>
+
+				<TextView
+					android:layout_height="36dp"
+					android:layout_width="wrap_content"
+					android:text="Sim 2"
+					android:gravity="center"
+					android:textSize="10sp"
+					android:layout_below="@id/mainRelativeLayout4"
+					android:id="@+id/s2b"
+					android:padding="10dp"
+					android:textColor="#6E6FA7"/>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_height="60dp"
+				android:layout_width="match_parent"
+				android:layout_below="@id/mainRelativeLayout2"
+				android:layout_marginTop="10dp"
+				android:id="@+id/mainRelativeLayout3">
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="58dp"
+					android:orientation="horizontal"
+					android:layout_toRightOf="@+id/v1"
+					android:layout_centerInParent="true"
+					android:layout_alignParentRight="true"
+					android:background="#27273F">
+
+					<LinearLayout
+						android:layout_height="wrap_content"
+						android:layout_width="0dp"
+						android:orientation="vertical"
+						android:layout_weight="1.0"
+						android:gravity="center">
+
+						<TextView
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content"
+							android:text="SIGNAL"
+							android:textSize="12sp"
+							android:layout_margin="6dp"
+							android:textColor="#D8DAE8"/>
+
+						<alistar.app.SituationLinearLightView
+							android:id="@+id/signalSituationView"
+							android:layout_height="16dp"
+							android:layout_width="48dp"
+							android:layout_centerInParent="true"
+							android:layout_margin="6dp"/>
+
+					</LinearLayout>
+
+					<TextView
+						android:layout_height="match_parent"
+						android:layout_width="2dp"
+						android:text="|"
+						android:gravity="center"
+						android:layout_gravity="center"
+						android:textColor="#904C4E73"/>
+
+					<LinearLayout
+						android:layout_height="wrap_content"
+						android:layout_width="0dp"
+						android:orientation="vertical"
+						android:layout_weight="1.0"
+						android:gravity="center">
+
+						<TextView
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content"
+							android:text="GPS"
+							android:textSize="11sp"
+							android:layout_margin="6dp"
+							android:textColor="#D8DAE8"/>
+
+						<alistar.app.SituationLinearLightView
+							android:id="@+id/gpsSituationView"
+							android:layout_height="16dp"
+							android:layout_width="48dp"
+							android:layout_centerInParent="true"
+							android:layout_margin="6dp"/>
+
+					</LinearLayout>
+
+				</LinearLayout>
+
+				<View
+					android:layout_height="10dp"
+					android:layout_width="10dp"
+					android:layout_centerInParent="true"
+					android:id="@+id/v1"/>
+
+				<RelativeLayout
+					android:layout_height="58dp"
+					android:layout_width="match_parent"
+					android:layout_toLeftOf="@id/v1"
+					android:layout_centerInParent="true"
+					android:background="#27273F">
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text="SOLDERING"
+						android:layout_gravity="left"
+						android:layout_marginTop="6dp"
+						android:layout_alignParentTop="true"
+						android:layout_alignParentLeft="true"
+						android:layout_marginLeft="10dp"
+						android:textSize="12sp"
+						android:textColor="#D8DAE8"
+						android:id="@+id/mainTextView1"/>
+
+					<LinearLayout
+						android:layout_height="match_parent"
+						android:layout_width="match_parent"
+						android:orientation="horizontal"
+						android:layout_below="@id/mainTextView1">
+
+						<TextView
+							android:layout_height="match_parent"
+							android:layout_width="0dp"
+							android:text="FI"
+							android:layout_alignParentBottom="true"
+							android:layout_centerHorizontal="true"
+							android:textSize="16sp"
+							android:layout_weight="1.0"
+							android:gravity="center"
+							android:id="@+id/soldering_year"
+							android:textColor="#FF6C94"/>
+
+						<TextView
+							android:layout_height="match_parent"
+							android:layout_width="2dp"
+							android:text="|"
+							android:gravity="center"
+							android:textColor="#904C4E73"/>
+
+						<TextView
+							android:layout_height="match_parent"
+							android:layout_width="0dp"
+							android:text="NI"
+							android:layout_alignParentBottom="true"
+							android:layout_centerHorizontal="true"
+							android:textSize="16sp"
+							android:layout_weight="1.0"
+							android:gravity="center"
+							android:id="@+id/soldering_month"
+							android:textColor="#FFD969"/>
+
+						<TextView
+							android:layout_height="match_parent"
+							android:layout_width="2dp"
+							android:text="|"
+							android:gravity="center"
+							android:textColor="#904C4E73"/>
+
+						<TextView
+							android:layout_height="match_parent"
+							android:layout_width="0dp"
+							android:text="SHED"
+							android:layout_alignParentBottom="true"
+							android:layout_centerHorizontal="true"
+							android:textSize="16sp"
+							android:layout_weight="1.0"
+							android:gravity="center"
+							android:textColor="#67FFDC"
+							android:id="@+id/soldering_day"/>
+
+					</LinearLayout>
+
+				</RelativeLayout>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_height="180dp"
+				android:layout_width="match_parent"
+				android:layout_below="@id/mainRelativeLayout3"
+				android:background="#27273F"
+				android:layout_marginTop="10dp"
+				android:id="@+id/mainRelativeLayout5">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="EMOTIONS"
+					android:layout_gravity="left"
+					android:layout_marginTop="6dp"
+					android:layout_alignParentTop="true"
+					android:layout_alignParentLeft="true"
+					android:layout_marginLeft="10dp"
+					android:textSize="12sp"
+					android:textColor="#D8DAE8"
+					android:id="@+id/mainTextView2"/>
+
+				<alistar.app.AliEmotionsChart
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:paddingRight="10dp"
+					android:layout_alignParentBottom="true"
+					android:layout_below="@id/mainTextView2"
+					android:id="@+id/ali_emotions_chart"/>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_height="60dp"
+				android:layout_width="match_parent"
+				android:layout_below="@id/mainRelativeLayout2"
+				android:layout_marginTop="10dp"
+				android:id="@+id/mainRelativeLayout3">
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="58dp"
+					android:orientation="horizontal"
+					android:layout_toRightOf="@+id/v1"
+					android:layout_centerInParent="true"
+					android:layout_alignParentRight="true"
+					android:background="#27273F">
+
+					<LinearLayout
+						android:layout_height="wrap_content"
+						android:layout_width="0dp"
+						android:orientation="vertical"
+						android:layout_weight="1.0"
+						android:gravity="center">
+
+						<TextView
+							android:id="@+id/sound_control_tv"
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content"
+							android:text="SC"
+							android:textSize="12sp"
+							android:layout_margin="6dp"
+							android:textColor="#D8DAE8"/>
+
+						<alistar.app.LinearLightSwitch
+							android:id="@+id/sound_control_switch"
+							android:layout_height="16dp"
+							android:layout_width="48dp"
+							android:layout_centerInParent="true"
+							android:layout_margin="6dp"/>
+
+					</LinearLayout>
+
+					<TextView
+						android:layout_height="match_parent"
+						android:layout_width="2dp"
+						android:text="|"
+						android:gravity="center"
+						android:layout_gravity="center"
+						android:textColor="#904C4E73"/>
+
+					<LinearLayout
+						android:layout_height="wrap_content"
+						android:layout_width="0dp"
+						android:orientation="vertical"
+						android:layout_weight="1.0"
+						android:gravity="center">
+
+						<TextView
+							android:id="@+id/sound_control_type_tv"
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content"
+							android:text="SILENT"
+							android:textSize="11sp"
+							android:layout_margin="6dp"
+							android:textColor="#D8DAE8"/>
+
+						<alistar.app.LinearLightSwitch
+							android:id="@+id/sound_control_type_switch"
+							android:layout_height="16dp"
+							android:layout_width="48dp"
+							android:layout_centerInParent="true"
+							android:layout_margin="6dp"/>
+
+					</LinearLayout>
+
+				</LinearLayout>
+
+				<View
+					android:layout_height="10dp"
+					android:layout_width="10dp"
+					android:layout_centerInParent="true"
+					android:id="@+id/v1"/>
+
+				<RelativeLayout
+					android:layout_height="58dp"
+					android:layout_width="match_parent"
+					android:layout_below="@id/mainRelativeLayout5"
+					android:layout_toLeftOf="@+id/v1"
+					android:background="#27273F">
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text="ALARM"
+						android:layout_gravity="left"
+						android:layout_marginTop="6dp"
+						android:layout_alignParentTop="true"
+						android:layout_alignParentLeft="true"
+						android:layout_marginLeft="10dp"
+						android:textSize="12sp"
+						android:textColor="#D8DAE8"
+						android:id="@+id/mainTextView3"/>
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text="ALARM TYPE"
+						android:layout_gravity="left"
+						android:layout_marginTop="4dp"
+						android:layout_alignParentTop="true"
+						android:layout_alignParentRight="true"
+						android:layout_marginRight="10dp"
+						android:textSize="12sp"
+						android:paddingTop="1dp"
+						android:paddingBottom="2dp"
+						android:paddingLeft="6dp"
+						android:paddingRight="6dp"
+						android:textColor="#D8DAE8"
+						android:id="@+id/at_button"
+						android:background="@drawable/button"
+						android:textStyle="bold"/>
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text="00:00"
+						android:layout_below="@id/mainTextView3"
+						android:layout_marginLeft="6dp"
+						android:textSize="23sp"
+						android:textColor="#448AFF"
+						android:id="@+id/alarm_time"/>
+
+					<RelativeLayout
+						android:layout_height="58dp"
+						android:layout_width="54dp"
+						android:layout_alignTop="@id/alarm_time"
+						android:layout_alignParentRight="true"
+						android:layout_marginRight="6dp"
+						android:gravity="center">
+
+						<alistar.app.LinearLightSwitch
+							android:layout_height="24dp"
+							android:layout_width="54dp"
+							android:id="@+id/alarm_switch"/>
+
+					</RelativeLayout>
+
+				</RelativeLayout>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:layout_below="@id/mainRelativeLayout5"
+					android:layout_marginTop="10dp"
+					android:background="#27273F"
+					android:orientation="vertical"
+					android:id="@+id/location_history_li">
+
+					<RelativeLayout
+						android:layout_height="wrap_content"
+						android:layout_width="match_parent"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content"
+							android:text="LOCATION HISTORY"
+							android:layout_gravity="left"
+							android:layout_marginTop="6dp"
+							android:layout_alignParentTop="true"
+							android:layout_alignParentLeft="true"
+							android:layout_marginLeft="10dp"
+							android:textSize="12sp"
+							android:textColor="#D8DAE8"
+							android:id="@+id/mainTextView3"/>
+
+						<TextView
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content"
+							android:text="LIST"
+							android:layout_gravity="left"
+							android:layout_marginTop="4dp"
+							android:layout_alignParentTop="true"
+							android:layout_alignParentRight="true"
+							android:layout_marginRight="10dp"
+							android:textSize="12sp"
+							android:paddingTop="1dp"
+							android:paddingBottom="2dp"
+							android:paddingLeft="6dp"
+							android:paddingRight="6dp"
+							android:textColor="#D8DAE8"
+							android:id="@+id/lhl_button"
+							android:background="@drawable/button"
+							android:textStyle="bold"/>
+
+					</RelativeLayout>
+
+					<LinearLayout
+						android:layout_height="48dp"
+						android:layout_width="match_parent"
+						android:background="#313250"
+						android:orientation="horizontal"
+						android:layout_marginTop="10dp">
+
+						<TextView
+							android:layout_height="match_parent"
+							android:layout_width="0dp"
+							android:text="PLACE"
+							android:layout_weight="1.1"
+							android:gravity="left|center"
+							android:layout_marginLeft="10dp"
+							android:textColor="#D8DAE8"/>
+
+						<View
+							android:layout_height="match_parent"
+							android:layout_width="1dp"
+							android:background="#904C4E73"
+							android:layout_marginRight="10dp"/>
+
+						<TextView
+							android:layout_height="match_parent"
+							android:layout_width="0dp"
+							android:text="DATE"
+							android:layout_alignParentRight="true"
+							android:layout_weight="0.9"
+							android:gravity="left|center"
+							android:layout_marginRight="10dp"
+							android:textColor="#D8DAE8"/>
+
+					</LinearLayout>
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/location_history_recycler_view"
+						android:layout_width="match_parent"
+						android:layout_height="148dp">
+
+					</androidx.recyclerview.widget.RecyclerView>
+
+				</LinearLayout>
+
+			</RelativeLayout>
+
+			<Button
+				android:id="@+id/button"
+				android:text="Test"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:visibility="invisible"/>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</RelativeLayout>
+

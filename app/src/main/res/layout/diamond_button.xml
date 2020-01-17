@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/click_base"
+	android:layout_width="wrap_content"
+	android:layout_height="36dp"
+	android:gravity="center_vertical">
+
+	<alistar.app.ui.Diamond
+		android:layout_width="16dp"
+		android:layout_height="16dp"
+		android:layout_margin="4dp"
+		android:id="@+id/diamondbuttonDiamond1"
+		android:layout_centerVertical="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Text"
+		android:textColor="#6D7088"
+		android:layout_toRightOf="@id/diamondbuttonDiamond1"
+		android:layout_centerVertical="true"
+		android:id="@+id/text"
+		android:textSize="12sp"/>
+
+</RelativeLayout>
+

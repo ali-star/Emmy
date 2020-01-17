@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="alistar.app">
+
+	<uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="in.wptrafficanalyzer.LocationGoogleMapV2Demo.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
+
+    <permission
+        android:name="in.wptrafficanalyzer.LocationGoogleMapV2Demo.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".MyService"
+            android:label="My Service" />
+
+        <receiver android:name=".SmsListener">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.readystatesoftware.notificationlog.LogActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
+        <receiver android:name=".BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".AskFeelingActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Transparent">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ShortcutActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AliEmotionsActivity"
+            android:label="@string/app_name" />
+
+        <receiver android:name=".alarm.WakefulBroadcast" />
+
+        <service android:name=".alarm.WakefulService" />
+
+        <activity
+            android:name=".alarm.AlarmActivity"
+            android:label="@string/app_name" />
+
+        <receiver
+            android:name=".MyDeviceAdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <intent-filter>
+
+                <!-- This action is required -->
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+            <!-- This is required this receiver to become device admin component. -->
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+        </receiver>
+
+        <activity
+            android:name=".map.SaraMap"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".LocationHistoryActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".voice_recognizer.VoiceRecognizerActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".music.MusicActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".music.MyEqualizerActivity"
+            android:label="@string/app_name" />
+
+        <receiver android:name=".screen_lock.LockScreenReceiver" />
+
+        <activity
+            android:name=".screen_lock.LockScreenActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".screen_lock.service.LockscreenViewService" />
+        <service android:name=".screen_lock.service.LockscreenService" />
+
+        <activity
+            android:name=".eye.OpenCVActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" />
+
+        <service android:name=".SaraViewService" />
+		<service android:name=".brain.WorkQueue" />
+
+        <activity android:name=".TestActivity" />
+        <activity android:name=".opencv.FdActivity" />
+        <activity android:name=".opencv.ImageGallery" />
+        <activity
+            android:name=".notebook.NoteBook"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".timeline.TimeLine"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".timeline.QuickTimelineNote"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Transparent" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCrxG_UhyZ7ghC1lap_oZu7_RsmUTBUpmc" />
+
+        <activity android:name=".ear.RecordingActivity"></activity>
+		<activity android:name=".SpeechRecognizerActivity"></activity>
+		<activity android:name=".CrashCenter"></activity>
+		<activity android:name=".CrashReportActivity"></activity>
+    </application>
+
+</manifest>

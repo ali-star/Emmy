@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<resources>
+		<declare-styleable name="coloredImageView">
+			<attr name="setColor" format="color"/>
+		</declare-styleable>
+		<declare-styleable name="base">
+			<attr name="setText" format="string"/>
+		</declare-styleable>
+	</resources>

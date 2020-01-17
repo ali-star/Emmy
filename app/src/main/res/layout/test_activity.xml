@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:layout_height="60dp"
+		android:layout_width="match_parent"
+		android:layout_below="@id/mainRelativeLayout2"
+		android:layout_marginTop="10dp"
+		android:id="@+id/mainRelativeLayout3">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="58dp"
+			android:orientation="horizontal"
+			android:layout_toRightOf="@+id/v1"
+			android:layout_centerInParent="true"
+			android:layout_alignParentRight="true"
+			android:background="#27273F">
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
+				android:orientation="vertical"
+				android:layout_weight="1.0"
+				android:gravity="center">
+
+				<TextView
+					android:id="@+id/sound_control_tv"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="SC"
+					android:textSize="12sp"
+					android:layout_margin="6dp"
+					android:textColor="#D8DAE8"/>
+
+				<alistar.app.alistar.app.LinearLightSwitch
+					android:id="@+id/sound_control_switch"
+					android:layout_height="16dp"
+					android:layout_width="48dp"
+					android:layout_centerInParent="true"
+					android:layout_margin="6dp"/>
+
+			</LinearLayout>
+
+			<TextView
+				android:layout_height="match_parent"
+				android:layout_width="2dp"
+				android:text="|"
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:textColor="#904C4E73"/>
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
+				android:orientation="vertical"
+				android:layout_weight="1.0"
+				android:gravity="center">
+
+				<TextView
+					android:id="@+id/sound_control_type_tv"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="SILENT"
+					android:textSize="11sp"
+					android:layout_margin="6dp"
+					android:textColor="#D8DAE8"/>
+
+				<alistar.app.LinearLightSwitch
+					android:id="@+id/sound_control_type_switch"
+					android:layout_height="16dp"
+					android:layout_width="48dp"
+					android:layout_centerInParent="true"
+					android:layout_margin="6dp"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<View
+			android:layout_height="10dp"
+			android:layout_width="10dp"
+			android:layout_centerInParent="true"
+			android:id="@+id/v1"/>
+
+			<RelativeLayout
+				android:layout_height="58dp"
+				android:layout_width="match_parent"
+				android:layout_below="@id/mainRelativeLayout5"
+				android:layout_toLeftOf="@+id/v1"
+				android:background="#27273F">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="ALARM"
+					android:layout_gravity="left"
+					android:layout_marginTop="6dp"
+					android:layout_alignParentTop="true"
+					android:layout_alignParentLeft="true"
+					android:layout_marginLeft="10dp"
+					android:textSize="12sp"
+					android:textColor="#D8DAE8"
+					android:id="@+id/mainTextView3"/>
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="ALARM TYPE"
+					android:layout_gravity="left"
+					android:layout_marginTop="4dp"
+					android:layout_alignParentTop="true"
+					android:layout_alignParentRight="true"
+					android:layout_marginRight="10dp"
+					android:textSize="12sp"
+					android:paddingTop="1dp"
+					android:paddingBottom="2dp"
+					android:paddingLeft="6dp"
+					android:paddingRight="6dp"
+					android:textColor="#D8DAE8"
+					android:id="@+id/at_button"
+					android:background="@drawable/button"
+					android:textStyle="bold"/>
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="00:00"
+					android:layout_below="@id/mainTextView3"
+					android:layout_marginLeft="6dp"
+					android:textSize="23sp"
+					android:textColor="#448AFF"
+					android:id="@+id/alarm_time"/>
+
+				<RelativeLayout
+					android:layout_height="58dp"
+					android:layout_width="54dp"
+					android:layout_alignTop="@id/alarm_time"
+					android:layout_alignParentRight="true"
+					android:layout_marginRight="6dp"
+					android:gravity="center">
+
+					<alistar.app.LinearLightSwitch
+						android:layout_height="24dp"
+						android:layout_width="54dp"
+						android:id="@+id/alarm_switch"/>
+
+				</RelativeLayout>
+
+			</RelativeLayout>
+
+	</RelativeLayout>
+
+</RelativeLayout>
+

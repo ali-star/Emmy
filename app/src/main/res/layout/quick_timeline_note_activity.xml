@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<ru.rambler.libs.swipe_layout.SwipeLayout
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/sl"
+		android:layout_width="match_parent"
+		android:layout_height="300dp">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="26dp">
+
+				<alistar.app.ui.RoundedBackground
+					android:layout_height="match_parent"
+					android:layout_width="match_parent"
+					android:layout_marginTop="37dp"/>
+
+				<EditText
+					android:id="@+id/note_et"
+					android:layout_height="match_parent"
+					android:layout_width="match_parent"
+					android:layout_marginTop="74dp"
+					android:ems="10"
+					android:gravity="top"
+					android:background="#00000000"
+					android:textColor="#FFFFFF"
+					android:layout_marginBottom="16dp"
+					android:layout_marginRight="16dp"
+					android:layout_marginLeft="16dp"/>
+
+				<FrameLayout
+					android:layout_height="87dp"
+					android:layout_width="87dp"
+					android:layout_centerHorizontal="true">
+
+					<alistar.app.ui.CircleBackground
+						android:layout_height="match_parent"
+						android:layout_width="match_parent"/>
+
+					<ImageView
+						android:id="@+id/emoji_iv"
+						android:layout_height="74dp"
+						android:layout_width="74dp"
+						android:src="@android:drawable/ic_delete"
+						android:layout_gravity="center"
+						android:layout_centerHorizontal="true"
+						android:alpha=".6"
+						android:padding="6dp"/>
+
+				</FrameLayout>
+
+			</RelativeLayout>
+
+		</RelativeLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:gravity="right"
+			app:bring_to_clamp="150dp"
+			app:clamp="self"
+			app:sticky="none">
+
+		</LinearLayout>
+
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:gravity="left"
+			app:bring_to_clamp="150dp"
+			app:clamp="self"
+			app:sticky="none">
+
+		</FrameLayout>
+
+	</ru.rambler.libs.swipe_layout.SwipeLayout>
+
+	<RelativeLayout
+		android:id="@+id/emoji_base"
+		android:visibility="invisible"
+		android:layout_height="match_parent"
+		android:layout_width="match_parent" >
+
+		<alistar.app.ui.RoundedBackground
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			app:setColor="#212121"/>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="16dp"/>
+
+	</RelativeLayout>
+
+</RelativeLayout>
+

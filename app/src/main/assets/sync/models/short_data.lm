@@ -1,0 +1,77 @@
+Language model created by QuickLM on Fri Dec 30 06:28:15 EST 2016
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 13 sentences and 15 words
+
+\data\
+ngram 1=15
+ngram 2=26
+ngram 3=13
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-1.8921 FILLING -0.2218
+-1.8921 HEY -0.2218
+-1.8921 MY -0.2218
+-1.8921 NEGATIVE -0.2218
+-1.8921 OK -0.2218
+-1.8921 ONE -0.2218
+-1.8921 POSITIVE -0.2218
+-1.8921 RECORD -0.2218
+-1.8921 SARA -0.2218
+-1.8921 SAVE -0.2218
+-1.8921 THREE -0.2218
+-1.8921 TOW -0.2218
+-1.8921 VALUE -0.2218
+
+\2-grams:
+-1.4150 <s> FILLING 0.0000
+-1.4150 <s> HEY 0.0000
+-1.4150 <s> MY 0.0000
+-1.4150 <s> NEGATIVE 0.0000
+-1.4150 <s> OK 0.0000
+-1.4150 <s> ONE 0.0000
+-1.4150 <s> POSITIVE 0.0000
+-1.4150 <s> RECORD 0.0000
+-1.4150 <s> SARA 0.0000
+-1.4150 <s> SAVE 0.0000
+-1.4150 <s> THREE 0.0000
+-1.4150 <s> TOW 0.0000
+-1.4150 <s> VALUE 0.0000
+-0.3010 FILLING </s> -0.3010
+-0.3010 HEY </s> -0.3010
+-0.3010 MY </s> -0.3010
+-0.3010 NEGATIVE </s> -0.3010
+-0.3010 OK </s> -0.3010
+-0.3010 ONE </s> -0.3010
+-0.3010 POSITIVE </s> -0.3010
+-0.3010 RECORD </s> -0.3010
+-0.3010 SARA </s> -0.3010
+-0.3010 SAVE </s> -0.3010
+-0.3010 THREE </s> -0.3010
+-0.3010 TOW </s> -0.3010
+-0.3010 VALUE </s> -0.3010
+
+\3-grams:
+-0.3010 <s> FILLING </s>
+-0.3010 <s> HEY </s>
+-0.3010 <s> MY </s>
+-0.3010 <s> NEGATIVE </s>
+-0.3010 <s> OK </s>
+-0.3010 <s> ONE </s>
+-0.3010 <s> POSITIVE </s>
+-0.3010 <s> RECORD </s>
+-0.3010 <s> SARA </s>
+-0.3010 <s> SAVE </s>
+-0.3010 <s> THREE </s>
+-0.3010 <s> TOW </s>
+-0.3010 <s> VALUE </s>
+
+\end\

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="#1F2132">
+
+	<LinearLayout
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
+
+		<RelativeLayout
+			android:layout_height="64dp"
+			android:layout_width="match_parent">
+
+			<FrameLayout
+				android:id="@+id/sara_frame"
+				android:layout_height="58dp"
+				android:layout_width="58dp"
+				android:layout_centerVertical="true">
+
+				<alistar.app.SaraView
+					android:layout_width="42dp"
+					android:layout_height="42dp"
+					android:id="@+id/sara"
+					android:layout_gravity="center"/>
+
+			</FrameLayout>
+
+			<TextView
+				android:id="@+id/sara_tv"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:text=""
+				android:layout_toRightOf="@id/sara_frame"
+				android:gravity="left|center"
+				android:textColor="#D8DAE8"
+				android:layout_centerVertical="true"
+				android:padding="3dp"/>
+
+		</RelativeLayout>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="#292946"
+			android:layout_weight="1">
+
+		</androidx.recyclerview.widget.RecyclerView>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:gravity="bottom">
+
+			<ImageView
+				android:layout_height="48dp"
+				android:layout_width="48dp"
+				android:src="@android:drawable/ic_delete"
+				android:padding="8dp"
+				android:id="@+id/emoji_iv"/>
+
+			<EditText
+				android:id="@+id/text_base"
+				android:minHeight="48dp"
+				android:maxHeight="100dp"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:ems="10"
+				android:layout_weight="1.0"
+				android:textColor="#D8DAE8"/>
+
+			<alistar.app.ColoredImageView
+				android:layout_height="48dp"
+				android:layout_width="48dp"
+				app:setColor="#6994FD"
+				android:padding="8dp"
+				android:src="@drawable/ic_send_white_48dp"
+				android:id="@+id/save"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<RelativeLayout
+		android:id="@+id/emoji_base"
+		android:visibility="gone"
+		android:layout_height="match_parent"
+		android:layout_width="match_parent">
+
+		<alistar.app.ui.RoundedBackground
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			app:setColor="#212121"/>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/emoji_recycler_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="16dp"/>
+
+	</RelativeLayout>
+
+</RelativeLayout>
+

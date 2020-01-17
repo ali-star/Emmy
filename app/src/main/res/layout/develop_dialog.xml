@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:gravity="center"
+	android:orientation="vertical">
+
+	<ScrollView
+		android:layout_height="300dp"
+		android:layout_width="100dp">
+
+		<LinearLayout
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="ExZ"
+				android:id="@+id/exz"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="Alarm"
+				android:id="@+id/alarm"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="VoiceRecognizer"
+				android:id="@+id/voice_recognizer"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="Music"
+				android:id="@+id/open_eq"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="LockScreen"
+				android:id="@+id/lockscreen"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="OpenCV"
+				android:id="@+id/opencv"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="find me"
+				android:id="@+id/find_me"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="Test"
+				android:id="@+id/btn_test"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="Resize"
+				android:id="@+id/btn_resize"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="TimeLine"
+				android:id="@+id/btn_timeline"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="AEA"
+				android:id="@+id/btn_emotions_activity"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="Recirding Activity"
+				android:id="@+id/btn_recording_activity"/>
+			
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="Test Ask Time"
+				android:id="@+id/btn_test_ask_time"/>
+			
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>
+
