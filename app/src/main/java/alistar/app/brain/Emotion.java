@@ -1,14 +1,15 @@
 package alistar.app.brain;
 
-public class AliEmotion
+public class Emotion
 {
 	
 	private int id, feeling;
 	private String note, emoji;
 	private long date;
 	private boolean isAnomaly;
+	private boolean dayFirstRecord;
 	
-	public AliEmotion(int id, int feeling, long date, String note, String emoji)
+	public Emotion(int id, int feeling, long date, String note, String emoji)
 	{
 		this.id = id;
 		this.feeling = feeling;
@@ -68,5 +69,13 @@ public class AliEmotion
 
 	public void setAnomaly(boolean anomaly) {
 		isAnomaly = anomaly;
+	}
+
+	public boolean isDayFirstRecord() {
+		return dayFirstRecord;
+	}
+
+	public void setDayFirstRecord(boolean dayFirstRecord) {
+		this.dayFirstRecord = dayFirstRecord;
 	}
 }

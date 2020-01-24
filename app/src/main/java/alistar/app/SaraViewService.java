@@ -3,6 +3,7 @@ package alistar.app;
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
+import android.media.MediaPlayer;
 import android.os.*;
 import android.view.*;
 import android.view.WindowManager.*;
@@ -104,21 +105,21 @@ public class SaraViewService extends Service
 	private AliEmotionCircle aliEmotionView;
 	private OnEmotionSaved onEmotionSavedListener;
 
-    public void onCreate ( )
+	public void onCreate ( )
 	{
-        super.onCreate ( );
+		super.onCreate ( );
 		initState ( );
 		initView ( );
 		addViews ( );
 		start ( );
-    }
+	}
 
-    @Override
-    public void onDestroy ( )
+	@Override
+	public void onDestroy ( )
 	{
-        super.onDestroy ( );
+		super.onDestroy ( );
 		stop ( );
-    }
+	}
 
 	private void initState ( )
 	{
@@ -173,25 +174,25 @@ public class SaraViewService extends Service
 		if ( mWindowManager != null )
 		{
 			slideAreaParams = new WindowManager.LayoutParams (
-				WindowManager.LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.TYPE_PHONE,
-				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-				PixelFormat.TRANSLUCENT );
+					WindowManager.LayoutParams.WRAP_CONTENT,
+					WindowManager.LayoutParams.WRAP_CONTENT,
+					WindowManager.LayoutParams.TYPE_PHONE,
+					WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+					PixelFormat.TRANSLUCENT );
 
 			saraBaseParams = new WindowManager.LayoutParams (
-				WindowManager.LayoutParams.MATCH_PARENT,
-				WindowManager.LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.TYPE_PHONE,
-				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-				PixelFormat.TRANSLUCENT );
+					WindowManager.LayoutParams.MATCH_PARENT,
+					WindowManager.LayoutParams.WRAP_CONTENT,
+					WindowManager.LayoutParams.TYPE_PHONE,
+					WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+					PixelFormat.TRANSLUCENT );
 
 			pageParams = new WindowManager.LayoutParams (
-				WindowManager.LayoutParams.MATCH_PARENT,
-				WindowManager.LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.TYPE_PHONE,
-				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-				PixelFormat.TRANSLUCENT );
+					WindowManager.LayoutParams.MATCH_PARENT,
+					WindowManager.LayoutParams.WRAP_CONTENT,
+					WindowManager.LayoutParams.TYPE_PHONE,
+					WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+					PixelFormat.TRANSLUCENT );
 
 			pageParams.gravity = Gravity.BOTTOM;
 			pageParams.x = 0;
@@ -209,54 +210,55 @@ public class SaraViewService extends Service
 			try
 			{
 				new SwipeDetector ( slideArea ).setOnSwipeListener ( new SwipeDetector.onSwipeEvent ( )
+				{
+
+					@Override
+					public void SwipeEventDetected ( View v, SwipeDetector.SwipeTypeEnum SwipeType )
 					{
-
-						@Override
-						public void SwipeEventDetected ( View v, SwipeDetector.SwipeTypeEnum SwipeType )
+						// TODO: Implement this method
+						if ( SwipeType == SwipeDetector.SwipeTypeEnum.LEFT_TO_RIGHT )
 						{
-							// TODO: Implement this method
-							if ( SwipeType == SwipeDetector.SwipeTypeEnum.LEFT_TO_RIGHT )
-							{
-								showSaraBase ( );
-							}
+							MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.menu_open);
+							mediaPlayer.start();
+							showSaraBase ( );
 						}
+					}
 
 
-					} );
+				} );
 
 				new SwipeDetector ( saraBase ).setOnSwipeListener ( new SwipeDetector.onSwipeEvent ( )
+				{
+
+					@Override
+					public void SwipeEventDetected ( View v, SwipeDetector.SwipeTypeEnum SwipeType )
 					{
-
-						@Override
-						public void SwipeEventDetected ( View v, SwipeDetector.SwipeTypeEnum SwipeType )
+						// TODO: Implement this method
+						if ( SwipeType == SwipeDetector.SwipeTypeEnum.BOTTOM_TO_TOP )
 						{
-							// TODO: Implement this method
-							if ( SwipeType == SwipeDetector.SwipeTypeEnum.BOTTOM_TO_TOP )
-							{
-								showList ( );
-							}
+							showList ( );
 						}
+					}
 
 
-					} );
+				} );
 
 				sara.setOnClickListener ( new View.OnClickListener ( )
+				{
+
+					@Override
+					public void onClick ( View p1 )
 					{
-
-						@Override
-						public void onClick ( View p1 )
-						{
-							// TODO: Implement this method
-							if ( isSaveEmotionPageVisible )
-								return;
-							if ( !pagesClosed ( ) )
-								hideSaraBase ( );
-						}
+						// TODO: Implement this method
+						if ( isSaveEmotionPageVisible )
+							return;
+						if (!pagesClosed())
+							hideSaraBase();
+					}
 
 
-					} );
+				} );
 				createListButtons();
-				//initListButtons ( );
 			}
 			catch ( Exception e )
 			{
@@ -268,26 +270,26 @@ public class SaraViewService extends Service
 	private void initSaveEmotionButtons ( )
 	{
 		aliEmotionView.setOnEmotionSelectedListener( new AliEmotionCircle.OnEmotionSelected ()
-			{
+		{
 
-				@Override
-				public void OnEmotionSelected ( int emotion )
+			@Override
+			public void OnEmotionSelected ( int emotion )
+			{
+				if ( onEmotionSavedListener != null )
 				{
-					if ( onEmotionSavedListener != null )
-					{
-						onEmotionSavedListener.onEmotionSaved( emotion );
-						getSharedPreferences("data", 0).edit().putLong("last_saved_feeling_time", System.currentTimeMillis()).commit();
-					}
+					onEmotionSavedListener.onEmotionSaved( emotion );
+					getSharedPreferences("data", 0).edit().putLong("last_saved_feeling_time", System.currentTimeMillis()).commit();
 				}
-				
-			
+			}
+
+
 		});
 	}
-	
+
 	public void setOnEmotionSavedListener ( OnEmotionSaved oes )
 	{
 		onEmotionSavedListener = oes;
-			
+
 	}
 
 	/*private void initListButtons ( )
@@ -385,37 +387,37 @@ public class SaraViewService extends Service
 		hold = true;
 		isSaveEmotionPageVisible = false;
 		Animate.slideDown ( saveEmotionFrame, utils.dpToTx ( 180 ), 500, new EaseCircularOutInterpolator ( ), new Animator.AnimatorListener ( )
+		{
+
+			@Override
+			public void onAnimationStart ( Animator p1 )
 			{
+				// TODO: Implement this method
+			}
 
-				@Override
-				public void onAnimationStart ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
+			@Override
+			public void onAnimationEnd ( Animator p1 )
+			{
+				aliEmotionView = null;
+				mWindowManager.removeView ( saveEmothionBase );
+				saveEmothionBase = null;
+				hold = false;
+			}
 
-				@Override
-				public void onAnimationEnd ( Animator p1 )
-				{
-					aliEmotionView = null;
-					mWindowManager.removeView ( saveEmothionBase );
-					saveEmothionBase = null;
-					hold = false;
-				}
+			@Override
+			public void onAnimationCancel ( Animator p1 )
+			{
+				// TODO: Implement this method
+			}
 
-				@Override
-				public void onAnimationCancel ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
-
-				@Override
-				public void onAnimationRepeat ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
+			@Override
+			public void onAnimationRepeat ( Animator p1 )
+			{
+				// TODO: Implement this method
+			}
 
 
-			} );
+		} );
 	}
 
 	public void showList ( )
@@ -432,35 +434,36 @@ public class SaraViewService extends Service
 		hold = true;
 		isListVisible = false;
 		Animate.slideDown ( listFrame, utils.dpToTx ( 180 ), 500, new EaseCircularOutInterpolator ( ), new Animator.AnimatorListener ( )
+		{
+
+			@Override
+			public void onAnimationStart ( Animator p1 )
 			{
+				// TODO: Implement this method
+			}
 
-				@Override
-				public void onAnimationStart ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
-
-				@Override
-				public void onAnimationEnd ( Animator p1 )
-				{
+			@Override
+			public void onAnimationEnd ( Animator p1 )
+			{
+				if (listBase.isAttachedToWindow())
 					mWindowManager.removeView ( listBase );
-					hold = false;
-				}
+				hold = false;
+			}
 
-				@Override
-				public void onAnimationCancel ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
+			@Override
+			public void onAnimationCancel ( Animator p1 )
+			{
+				// TODO: Implement this method
+			}
 
-				@Override
-				public void onAnimationRepeat ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
+			@Override
+			public void onAnimationRepeat ( Animator p1 )
+			{
+				// TODO: Implement this method
+			}
 
 
-			} );
+		} );
 	}
 
 	public void showSaraBase ( )
@@ -475,60 +478,42 @@ public class SaraViewService extends Service
 		say ( "Hi Ali" );
 	}
 
-	public void hideSaraBase ( )
-	{
-		if ( !isSaraVisible | isPageVisible ( ) )
+	public void hideSaraBase () {
+		if (!isSaraVisible | isPageVisible ())
 			return;
-		Animate.slideDown ( saraFrame, utils.dpToTx ( 36 ), 400, new EaseCubicInOutInterpolator ( ), new Animator.AnimatorListener ( )
-			{
+		isSaraVisible = false;
+		Animate.slideDown ( saraFrame, utils.dpToTx (36), 400, new EaseCubicInOutInterpolator (), new Animator.AnimatorListener () {
 
-				@Override
-				public void onAnimationStart ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
+			@Override
+			public void onAnimationStart (Animator p1) {}
 
-				@Override
-				public void onAnimationEnd ( Animator p1 )
-				{
-					// TODO: Implement this method
-					mWindowManager.addView ( slideArea, slideAreaParams );
-					mWindowManager.removeView ( saraBase );
-					isSaraVisible = false;
-				}
+			@Override
+			public void onAnimationEnd ( Animator p1 ) {
+				if (!slideArea.isAttachedToWindow())
+					mWindowManager.addView(slideArea, slideAreaParams);
+				if (saraBase.isAttachedToWindow())
+					mWindowManager.removeView(saraBase);
+			}
 
-				@Override
-				public void onAnimationCancel ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
+			@Override
+			public void onAnimationCancel ( Animator p1 ) {}
 
-				@Override
-				public void onAnimationRepeat ( Animator p1 )
-				{
-					// TODO: Implement this method
-				}
-
-
-			} );
+			@Override
+			public void onAnimationRepeat ( Animator p1 ) {}
+		});
 
 	}
-
-	/*public void say ( final String text )
-	 {
-	 sara.say ( text );
-	 }*/
 
 	public void say ( final String text )
 	{
 		sara.post ( new Runnable ( )
+		{
+			@Override
+			public void run ( )
 			{
-				@Override
-				public void run ( )
-				{
-					sara.say ( text );
-				}
-			} );
+				sara.say ( text );
+			}
+		} );
 	}
 
 	private boolean pagesClosed ( )
@@ -557,7 +542,7 @@ public class SaraViewService extends Service
 			return true;
 		return false;
 	}
-	
+
 	private void createListButtons ( )
 	{
 		List<DiamondButton> buttons = new ButtonsList ( SaraViewService.this ).getButtonsList();
@@ -588,7 +573,7 @@ public class SaraViewService extends Service
 			column.addView( buttons.get( i ) );
 			counter ++;
 		}
-		
+
 		//row.addView(
 	}
 
@@ -596,7 +581,7 @@ public class SaraViewService extends Service
 	{
 		public void onEmotionSaved ( int emotion );
 	}
-	
+
 	public WorkQueue getWorkQueueService ( )
 	{
 		return workQueue;

@@ -1,6 +1,7 @@
 package alistar.app;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import java.util.List;
 import android.content.Context;
@@ -21,7 +22,7 @@ import android.graphics.drawable.ColorDrawable;
 
 public class CrashCenter extends Activity
 {
-	
+
 	private RecyclerView rv;
 	private CrashCenterAdapter cca;
 	private List<File> data;
@@ -35,34 +36,43 @@ public class CrashCenter extends Activity
 	{
 		super.onCreate ( savedInstanceState );
 		setContentView(R.layout.crash_center);
-		
-		rv = (RecyclerView) findViewById ( R.id.recycler_view );
-		spl = (SlideBottomPanel) findViewById(R.id.sbv);
+
+		rv = findViewById ( R.id.recycler_view );
+		spl = findViewById(R.id.sbv);
+		badgeView = findViewById( R.id.badge );
 		utils = Utils.getInstance ( this );
-        rv.setHasFixedSize ( true );
+		rv.setHasFixedSize ( true );
 		LinearLayoutManager mLayoutManager = new LinearLayoutManager ( this );
 		rv.setLayoutManager ( mLayoutManager );
 		getData ( );
 	}
-	
+
 	private void getData()
 	{
-		badgeView = (BadgeView) findViewById( R.id.badge );
 		badgeView.setValue("Checking Crashes...");
-		data = new ArrayList<>();
-		File directory = new File(Utils.CRASH_FOLDER);
-		File[] files = directory.listFiles();
-		Log.d("Files", "Size: "+ files.length);
-		for (int i = 0; i < files.length; i++)
-		{
-			Log.d("Files", "FileName:" + files[i].getName());
-			data.add(files[i]);
-		}
-		badgeView.setValue("we have " + String.valueOf(files.length) + " crashes!");
-		cca = new CrashCenterAdapter(data, this);
-		rv.setAdapter(cca);
+		AsyncTask.execute(new Runnable() {
+			@Override
+			public void run() {
+				data = new ArrayList<>();
+				File directory = new File(Utils.CRASH_FOLDER);
+				final File[] files = directory.listFiles();
+				Log.d("Files", "Size: "+ files.length);
+				for (File file : files) {
+					Log.d("Files", "FileName:" + file.getName());
+					data.add(0, file);
+				}
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						badgeView.setValue("we have " + String.valueOf(files.length) + " crashes!");
+						cca = new CrashCenterAdapter(data, CrashCenter.this);
+						rv.setAdapter(cca);
+					}
+				});
+			}
+		});
 	}
-	
+
 	public class CrashCenterAdapter extends RecyclerView.Adapter<CrashCenterAdapter.MyViewHolder>
 	{
 		private List<File> mDataset;
@@ -97,11 +107,11 @@ public class CrashCenter extends Activity
 		// Create new views (invoked by the layout manager)
 		@Override
 		public CrashCenterAdapter.MyViewHolder onCreateViewHolder ( ViewGroup parent,
-																int viewType )
+																	int viewType )
 		{
 			// create a new view
 			View v = LayoutInflater.from ( parent.getContext ( ) )
-				.inflate ( R.layout.crash_item, parent, false );
+					.inflate ( R.layout.crash_item, parent, false );
 			// set the view's size, margins, paddings and layout parameters
 			MyViewHolder vh = new MyViewHolder ( v );
 			return vh;
@@ -123,19 +133,19 @@ public class CrashCenter extends Activity
 				holder.color.setBackgroundColor(Color.parseColor("#69FFDE"));
 			}
 			holder.clickBase.setOnClickListener(new View.OnClickListener()
-				{
+			{
 
-					@Override
-					public void onClick ( View p1 )
-					{
-						CrashLogDialog cld = new CrashLogDialog (CrashCenter.this);
-						cld.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						cld.show();
-						cld.setCrashLog(crash);
-						//Log.d("click", "click ok");
-						//spl.displayPanel();
-					}
-				
+				@Override
+				public void onClick ( View p1 )
+				{
+					CrashLogDialog cld = new CrashLogDialog (CrashCenter.this);
+					cld.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					cld.show();
+					cld.setCrashLog(crash);
+					//Log.d("click", "click ok");
+					//spl.displayPanel();
+				}
+
 			});
 		}
 
@@ -145,5 +155,5 @@ public class CrashCenter extends Activity
 			return mDataset.size ( );
 		}
 	}
-	
+
 }

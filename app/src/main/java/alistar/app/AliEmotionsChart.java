@@ -1,6 +1,6 @@
 package alistar.app;
 
-import alistar.app.brain.AliEmotion;
+import alistar.app.brain.Emotion;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +10,9 @@ import android.graphics.Path;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,27 +28,25 @@ public class AliEmotionsChart extends View
 	float padding = 0;
 	Paint baseLinePaint = new Paint();
 	Paint linePaint = new Paint();
+	Paint blueLinePaint = new Paint();
 	Paint chartPaint = new Paint();
 	Paint fillPaint = new Paint();
 	Paint shadowPaint = new Paint();
 	Paint circlePaint = new Paint();
-	List<AliEmotion> data = null;
+	List<Emotion> data = null;
 	List<Point> points = null;
 
-	public AliEmotionsChart(Context context)
-	{
+	public AliEmotionsChart(Context context) {
 		super(context);
 		init();
 	}
 
-	public AliEmotionsChart(Context context, AttributeSet attrs)
-	{
+	public AliEmotionsChart(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
 
-	protected void init()
-	{
+	protected void init() {
 		setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 		baseLinePaint.setColor(Color.parseColor("#AA4c4e73"));
@@ -55,6 +56,10 @@ public class AliEmotionsChart extends View
 		linePaint.setColor(Color.parseColor("#404c4e73"));
 		linePaint.setStyle(Paint.Style.STROKE);
 		linePaint.setStrokeWidth(1);
+
+		blueLinePaint.setColor(ContextCompat.getColor(getContext(), R.color.blue_40));
+		blueLinePaint.setStyle(Paint.Style.STROKE);
+		blueLinePaint.setStrokeWidth(1);
 
 		chartPaint.setColor(Color.parseColor("#6C91FA"));
 		chartPaint.setStyle(Paint.Style.STROKE);
@@ -79,15 +84,13 @@ public class AliEmotionsChart extends View
 		points = new ArrayList<Point>();
 	}
 
-	public void setData(List<AliEmotion> data)
-	{
+	public void setData(List<Emotion> data) {
 		this.data = data;
 		invalidate();
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas)
-	{
+	protected void onDraw(Canvas canvas) {
 		// TODO: Implement this method
 		super.onDraw(canvas);
 		Shader chartShader = new LinearGradient(0, getHeight() / 2, getWidth(), getHeight() / 2, Color.parseColor("#6C91FA"), Color.parseColor("#9967F4"), Shader.TileMode.CLAMP);
@@ -101,49 +104,35 @@ public class AliEmotionsChart extends View
 		halfWidth = width / 2;
 		halfHeight = height / 2;
 		padding = getPaddingRight();
-		//step = ((width) / pointsOnScreen) - ((padding / pointsOnScreen) / 2);
 		step = (width - (padding * 2)) / (pointsOnScreen - 1);
 
 		valueHeight = (height - (padding) - (chartPaint.getStrokeWidth() * 3f)) / 11f;
 		float valueWidth = (width - (padding * 2)) / (pointsOnScreen - 1);
-		//draw bg lines
-		// canvas.drawLine(width - padding, -(-5 * valueHeight) + halfHeight, width - padding, -(5 * valueHeight) + halfHeight, linePaint);
-		// canvas.drawLine(padding, -(-5 * valueHeight) + halfHeight, padding, -(5 * valueHeight) + halfHeight, linePaint);
-
-		for (int i = -5; i <= 5; i++)
-			canvas.drawLine(padding, -(i * valueHeight) + halfHeight, width - padding, -(i * valueHeight) + halfHeight, i == -5 || i == 5 || i == 0 ? baseLinePaint : linePaint);
-
-		for (int i = 0; i < pointsOnScreen; i++)
-			canvas.drawLine(padding + (i * valueWidth), -(-5 * valueHeight) + halfHeight, padding + (i * valueWidth), -(5 * valueHeight) + halfHeight, i == 0 || i == pointsOnScreen - 1 ? baseLinePaint : linePaint);
 
 		//draw chart
-		AliEmotion ae = null;
-		if (data != null)
-		{
-			for (int i=0; i < data.size(); i++)
-			{
-				ae = data.get(i);
+		Emotion emotion;
+		if (data != null) {
+			for (int i = 0; i < data.size(); i++) {
+				emotion = data.get(i);
 				Point point = new Point();
 				float x = 0;
 				float y = 0;
 
-				if (i == 0)
-				{
+				if (i == 0) {
 					x = padding;
 				}
-				if (i > 0 & i != data.size() - 1 & i < data.size())
-				{
+				if (i > 0 & i != data.size() - 1 & i < data.size()) {
 					x = padding + (((float) i) * step);
 				}
-				if (i == data.size() - 1)
-				{
+				if (i == data.size() - 1) {
 					x = padding + ((float) i * step);
 				}
 
-				y = -(ae.getFeeling() * valueHeight) + halfHeight;
+				y = -(emotion.getFeeling() * valueHeight) + halfHeight;
 
 				point.set(x, y);
-				point.isAnomaly = ae.isAnomaly();
+				point.isAnomaly = emotion.isAnomaly();
+				point.isFirstPointOfDay = emotion.isDayFirstRecord();
 				points.add(point);
 			}
 		}
@@ -162,14 +151,19 @@ public class AliEmotionsChart extends View
 		shadowPath.moveTo(point0.x, point0.y);
 		fillPath.moveTo(point0.x, point0.y);
 
-		for (int i = 0; i < points.size(); i++)
-		{
+		drawChartGrid(canvas, valueWidth);
+
+		for (int i = 0; i < points.size(); i++) {
 			Point point = points.get(i);
 			path.lineTo(point.x, point.y);
 			shadowPath.lineTo(point.x, point.y);
 			fillPath.lineTo(point.x, point.y);
-			if (point.isAnomaly)
-				canvas.drawCircle(point.x, point.y, 3, circlePaint);
+		}
+
+		for (int i = 0; i < points.size(); i++) {
+			Point point = points.get(i);
+			if (point.isFirstPointOfDay)
+				canvas.drawLine(padding + (i * valueWidth), -(-5 * valueHeight) + halfHeight, padding + (i * valueWidth), -(5 * valueHeight) + halfHeight, blueLinePaint);
 		}
 
 		fillPath.lineTo((padding) + ((points.size() - 1) * step), height - padding);
@@ -187,19 +181,24 @@ public class AliEmotionsChart extends View
 		}
 	}
 
+	private void drawChartGrid(Canvas canvas, float valueWidth) {
+		for (int i = -5; i <= 5; i++)
+			canvas.drawLine(padding, -(i * valueHeight) + halfHeight, width - padding, -(i * valueHeight) + halfHeight, i == -5 || i == 5 || i == 0 ? baseLinePaint : linePaint);
+
+		for (int i = 0; i < pointsOnScreen; i++)
+			canvas.drawLine(padding + (i * valueWidth), -(-5 * valueHeight) + halfHeight, padding + (i * valueWidth), -(5 * valueHeight) + halfHeight, i == 0 || i == pointsOnScreen - 1 ? baseLinePaint : linePaint);
+	}
+
 	class Point {
 
 		float x;
 		float y;
 		boolean isAnomaly;
+		boolean isFirstPointOfDay;
 
 		void set(float x, float y) {
 			this.x = x;
 			this.y = y;
-		}
-
-		void setAnomaly(boolean isAnomaly) {
-			this.isAnomaly = isAnomaly;
 		}
 	}
 

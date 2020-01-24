@@ -305,6 +305,19 @@
 					android:textColor="#D8DAE8"
 					android:id="@+id/mainTextView2"/>
 
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="Toay"
+					android:layout_gravity="left"
+					android:layout_marginTop="6dp"
+					android:layout_alignParentTop="true"
+					android:layout_alignParentRight="true"
+					android:layout_marginRight="10dp"
+					android:textSize="12sp"
+					android:textColor="#D8DAE8"
+					android:id="@+id/todayEmotionTextView"/>
+
 				<alistar.app.AliEmotionsChart
 					android:layout_height="wrap_content"
 					android:layout_width="match_parent"

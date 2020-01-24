@@ -6,7 +6,6 @@ import com.readystatesoftware.notificationlog.*;
 import java.io.File;
 import java.util.*;
 import android.database.*;
-import android.os.Environment;
 
 import alistar.app.Utils;
 import alistar.app.map.*;
@@ -123,9 +122,9 @@ public class Memory extends SQLiteOpenHelper
 		Log.d ( "[Memory] Emotions", "Ali emotion saved, value:" + String.valueOf ( feeling ) );
 	}
 
-	public List<AliEmotion> getEmotions(int count)
+	public List<Emotion> getEmotions(int count)
 	{
-		List<AliEmotion> data = new ArrayList<AliEmotion> ( );
+		List<Emotion> data = new ArrayList<Emotion> ( );
 		SQLiteDatabase db = this.getWritableDatabase ( );
 		Cursor cursor = db.rawQuery ( "SELECT * FROM " + TABLE_ALI_EMOTIONS + " ORDER BY " + KEY_ID + " DESC LIMIT " + count, null );
 
@@ -135,18 +134,39 @@ public class Memory extends SQLiteOpenHelper
 		for ( int i=0; i < cursor.getCount ( ); i++ )
 		{
 			cursor.moveToPosition ( ( cursor.getCount ( ) - 1 ) - i );
-			data.add ( new AliEmotion ( Integer.valueOf ( cursor.getString ( 0 ) )
-									   , Integer.valueOf ( cursor.getString ( 1 ) ), Long.valueOf ( cursor.getString ( 2 ) )
-									   , cursor.getString ( 3 ), cursor.getString ( 4 ) ) );
+			data.add ( new Emotion( Integer.valueOf ( cursor.getString ( 0 ) )
+					, Integer.valueOf ( cursor.getString ( 1 ) ), Long.valueOf ( cursor.getString ( 2 ) )
+					, cursor.getString ( 3 ), cursor.getString ( 4 ) ) );
 		}
 		cursor.close ( );
 		db.close ( );
 		return data;
 	}
 
-	public List<AliEmotion> getAllAliEmotions ( )
+	public List<Emotion> getEmotionsByTimeRange(long start, long end)
 	{
-		List<AliEmotion> data = new ArrayList<AliEmotion> ( );
+		List<Emotion> data = new ArrayList<> ( );
+		SQLiteDatabase db = this.getWritableDatabase ( );
+		Cursor cursor = db.rawQuery ( "SELECT * FROM " + TABLE_ALI_EMOTIONS + " WHERE " + KEY_DATE + " >= " + start + " AND " + KEY_DATE + " <= " + end + " ORDER BY " + KEY_ID + " DESC ", null );
+
+		if ( !cursor.moveToFirst ( ) )
+			return data;
+
+		for ( int i=0; i < cursor.getCount ( ); i++ )
+		{
+			cursor.moveToPosition ( ( cursor.getCount ( ) - 1 ) - i );
+			data.add ( new Emotion( Integer.valueOf ( cursor.getString ( 0 ) )
+					, Integer.valueOf ( cursor.getString ( 1 ) ), Long.valueOf ( cursor.getString ( 2 ) )
+					, cursor.getString ( 3 ), cursor.getString ( 4 ) ) );
+		}
+		cursor.close ( );
+		db.close ( );
+		return data;
+	}
+
+	public List<Emotion> getAllAliEmotions ( )
+	{
+		List<Emotion> data = new ArrayList<Emotion> ( );
 		SQLiteDatabase db = this.getWritableDatabase ( );
 		Cursor cursor = db.rawQuery ( "SELECT * FROM " + TABLE_ALI_EMOTIONS + " ORDER BY " + KEY_ID, null );
 
@@ -156,7 +176,7 @@ public class Memory extends SQLiteOpenHelper
 		for ( int i=0; i < cursor.getCount ( ); i++ )
 		{
 			cursor.moveToPosition ( ( cursor.getCount ( ) - 1 ) - i );
-			data.add ( new AliEmotion ( Integer.valueOf ( cursor.getString ( 0 ) )
+			data.add ( new Emotion( Integer.valueOf ( cursor.getString ( 0 ) )
 									   , Integer.valueOf ( cursor.getString ( 1 ) ), Long.valueOf ( cursor.getString ( 2 ) )
 									   , cursor.getString ( 3 ), cursor.getString ( 4 ) ) );
 			/*if(cursor.getString(3) == null)

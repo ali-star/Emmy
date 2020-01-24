@@ -22,13 +22,13 @@ public class MyApplication extends Application
 		Log.setNotificationsEnabled ( true );
 		startService ( new Intent ( this, MyService.class ) );
 		
-		/*Thread.setDefaultUncaughtExceptionHandler(
+		Thread.setDefaultUncaughtExceptionHandler(
             new Thread.UncaughtExceptionHandler() {
                 @Override
                 public void uncaughtException (Thread thread, Throwable e) {
                     handleUncaughtException (thread, e);
                 }
-            });*/
+            });
 		
 		// Initializing backtory
        /* BacktoryClient.Android.init ( Config.newBuilder ( ).
@@ -51,7 +51,7 @@ public class MyApplication extends Application
 		Utils.getInstance(getApplicationContext()).writeStringToFile(stackTrace.toString(), new File(Utils.CRASH_FOLDER+"crash_"+sdf.format(new Date())+".txt"));
         System.err.println(stackTrace);// You can use LogCat too
 		System.exit(0);
-		getApplicationContext().startActivity(new Intent(getApplicationContext(), CrashReportActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("crash", stackTrace.toString()));
+		// getApplicationContext().startActivity(new Intent(getApplicationContext(), CrashReportActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("crash", stackTrace.toString()));
 
         // Add some code logic if needed based on your requirement
     }

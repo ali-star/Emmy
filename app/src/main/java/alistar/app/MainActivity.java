@@ -26,6 +26,7 @@ import alistar.app.map.*;
 import com.nanotasks.*;
 import alistar.app.brain.*;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,8 +42,8 @@ public class MainActivity extends Activity
 	private Intent serviceConnectionIntent;
 	private SituationLinearLightView gpsSituationView, signalSituationView;
 	private BroadcastReceiver mReceiver;
-	private TextView solderingYear, solderingMonth, solderingDay;
-	public TextView alarmTimeTv, soundControlTv, soundControlTypeTv;
+	private TextView solderingYear, solderingMonth, solderingDay, alarmTimeTv, soundControlTv,
+			soundControlTypeTv, todayEmotionTextView;
 	private Alarm alarm;
 	private LinearLightSwitch alarmSwitch, soundControlSwitch, soundControlTypeSwitch;
 	private LocationHistoryAdapter lhAdapter;
@@ -128,6 +129,8 @@ public class MainActivity extends Activity
 		soundControlTypeSwitch = (LinearLightSwitch) findViewById(R.id.sound_control_type_switch);
 		soundControlTv = (TextView) findViewById(R.id.sound_control_tv);
 		soundControlTypeTv = (TextView) findViewById(R.id.sound_control_type_tv);
+
+		todayEmotionTextView = findViewById(R.id.todayEmotionTextView);
 		
 		soundControlTypeSwitch.setOn(utils.getSoundControlType() == 1);
 		soundControlTypeTv.setText(utils.getSoundControlType() == 1 ? "VIBRATE" : "SILENT");
@@ -442,9 +445,51 @@ public class MainActivity extends Activity
     }
 
 	private void initEmotionsChart(AliEmotionsChart aliEmotionsChart) {
-		List<AliEmotion> chartEmotions = utils.getEmotions(24);
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.set(Calendar.HOUR_OF_DAY, 0);
+    	calendar.set(Calendar.MINUTE, 0);
+    	calendar.set(Calendar.SECOND, 0);
+    	calendar.set(Calendar.MILLISECOND, 0);
 
-		List<AliEmotion> detectAnomsEmotions = utils.getEmotions(500);
+    	long startTime = calendar.getTimeInMillis();
+    	long endTime = System.currentTimeMillis();
+
+    	long todayFirstRecordTime = 0;
+
+		List<Emotion> todayEmotions = utils.getEmotionsByTimeRange(startTime, endTime);
+
+		if (!todayEmotions.isEmpty())
+			todayFirstRecordTime = todayEmotions.get(0).getDate();
+
+		int overall = 0;
+
+		for(Emotion emotion : todayEmotions) {
+			overall += emotion.getFeeling();
+		}
+
+		double todayAverage = 0;
+
+		if (todayEmotions.size() > 0)
+			todayAverage = (double) overall / (double) todayEmotions.size();
+
+		if (todayAverage >= 0.1) {
+			todayEmotionTextView.setTextColor(ContextCompat.getColor(this, R.color.green));
+		} else if (todayAverage < 0.1 && todayAverage > -0.1)
+			todayEmotionTextView.setTextColor(ContextCompat.getColor(this, R.color.white));
+		else
+			todayEmotionTextView.setTextColor(ContextCompat.getColor(this, R.color.red));
+
+		String todayAverageText = String.format(Locale.ENGLISH,"%.3f", todayAverage);
+		todayEmotionTextView.setText(todayAverage > 0 ? "+" + todayAverageText : todayAverageText);
+
+		List<Emotion> chartEmotions = utils.getEmotions(24);
+		for (Emotion emotion : chartEmotions) {
+			if (emotion.getDate() == todayFirstRecordTime) {
+				emotion.setDayFirstRecord(true);
+			}
+		}
+
+		List<Emotion> detectAnomsEmotions = utils.getEmotions(500);
 
 		DetectAnoms.Config config = new DetectAnoms.Config();
 		config.setMaxAnoms(0.2);
@@ -464,9 +509,9 @@ public class MainActivity extends Activity
 		try {
 			DetectAnoms.ANOMSResult anomsResult = detectAnoms.anomalyDetection(times, series);
 			for (long index : anomsResult.getAnomsIndex()) {
-				for (AliEmotion aliEmotion : chartEmotions) {
-					if (aliEmotion.getDate() == detectAnomsEmotions.get((int) index).getDate()) {
-						aliEmotion.setAnomaly(true);
+				for (Emotion emotion : chartEmotions) {
+					if (emotion.getDate() == detectAnomsEmotions.get((int) index).getDate()) {
+						emotion.setAnomaly(true);
 					}
 				}
 				Log.i("anomaly detected", "feeling: " + detectAnomsEmotions.get((int) index).getFeeling() + " index: " + index);

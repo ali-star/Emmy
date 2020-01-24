@@ -253,9 +253,14 @@ public class Utils
 		memory.saveAliFeeling(feeling, note, System.currentTimeMillis(), emoji);
 	}
 
-	public List<AliEmotion> getEmotions(int count)
+	public List<Emotion> getEmotions(int count)
 	{
 		return new Memory(context).getEmotions(count);
+	}
+
+	public List<Emotion> getEmotionsByTimeRange(long start, long end)
+	{
+		return new Memory(context).getEmotionsByTimeRange(start, end);
 	}
 
 	public void initFolders()
