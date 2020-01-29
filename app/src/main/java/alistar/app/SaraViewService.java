@@ -205,10 +205,12 @@ public class SaraViewService extends Service
 			slideAreaParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
 			slideAreaParams.x = 0;
 			slideAreaParams.y = 0;
-			mWindowManager.addView ( slideArea, slideAreaParams );
+
+
 
 			try
 			{
+				mWindowManager.addView ( slideArea, slideAreaParams );
 				new SwipeDetector ( slideArea ).setOnSwipeListener ( new SwipeDetector.onSwipeEvent ( )
 				{
 

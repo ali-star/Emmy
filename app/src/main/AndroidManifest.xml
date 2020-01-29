@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="alistar.app">
 
-	<uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -28,6 +28,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -56,6 +57,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/NoActionBar">
+        <activity
+            android:name=".treasury.TreasuryActivity"
+            android:label="@string/title_activity_treasury"
+            android:theme="@style/NoActionBar.NoActionBar"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -169,7 +174,7 @@
             android:screenOrientation="landscape" />
 
         <service android:name=".SaraViewService" />
-		<service android:name=".brain.WorkQueue" />
+        <service android:name=".brain.WorkQueue" />
 
         <activity android:name=".TestActivity" />
         <activity android:name=".opencv.FdActivity" />
@@ -189,10 +194,10 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCrxG_UhyZ7ghC1lap_oZu7_RsmUTBUpmc" />
 
-        <activity android:name=".ear.RecordingActivity"></activity>
-		<activity android:name=".SpeechRecognizerActivity"></activity>
-		<activity android:name=".CrashCenter"></activity>
-		<activity android:name=".CrashReportActivity"></activity>
+        <activity android:name=".ear.RecordingActivity" />
+        <activity android:name=".SpeechRecognizerActivity" />
+        <activity android:name=".CrashCenter" />
+        <activity android:name=".CrashReportActivity" />
     </application>
 
 </manifest>

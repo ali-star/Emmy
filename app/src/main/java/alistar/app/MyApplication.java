@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.app.Application;
 
+import androidx.core.content.ContextCompat;
+
 public class MyApplication extends Application
 {
 
@@ -19,16 +21,16 @@ public class MyApplication extends Application
 		// TODO: Implement this method
 		super.onCreate ( );
 		Log.initialize ( this );
-		Log.setNotificationsEnabled ( true );
-		startService ( new Intent ( this, MyService.class ) );
+		Log.setNotificationsEnabled (false);
+		ContextCompat.startForegroundService(this, new Intent ( this, MyService.class ) );
 		
-		Thread.setDefaultUncaughtExceptionHandler(
+		/*Thread.setDefaultUncaughtExceptionHandler(
             new Thread.UncaughtExceptionHandler() {
                 @Override
                 public void uncaughtException (Thread thread, Throwable e) {
                     handleUncaughtException (thread, e);
                 }
-            });
+            });*/
 		
 		// Initializing backtory
        /* BacktoryClient.Android.init ( Config.newBuilder ( ).

@@ -98,16 +98,28 @@ public class MyService extends Service {
 	public void onCreate() {
 		// TODO: Implement this method
 		super.onCreate();
+
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+		NotificationChannel notificationChannel = null;
+		if (android.os.Build.VERSION.SDK_INT >= 26) {
+			notificationChannel = new NotificationChannel(getPackageName(), "Main", NotificationManager.IMPORTANCE_LOW);
+			notificationManager.deleteNotificationChannel(getPackageName());
+			notificationManager.createNotificationChannel(notificationChannel);
+		}
+
 		notificationBuilder = new NotificationCompat.Builder(this);
 		notificationBuilder.setSmallIcon(R.drawable.app_icon);
 		notificationBuilder.setContentTitle("Sara");
 		notificationBuilder.setContentText("Hi Ali ^.^");
 		notificationBuilder.setOnlyAlertOnce(true);
 		notificationBuilder.setOngoing(true);
+		notificationBuilder.setChannelId(getPackageName());
 		//notificationBuilder.setPriority(Notification.PRIORITY_MIN);
-		notificationManager.notify(notificationId, notificationBuilder.getNotification());
+		startForeground(notificationId, notificationBuilder.build());
+
 		registerReceivers();
+
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, true);

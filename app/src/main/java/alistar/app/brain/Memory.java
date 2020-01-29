@@ -106,6 +106,9 @@ public class Memory extends SQLiteOpenHelper
 	{
 		super ( context, Utils.MEMORY_FOLDER
 			   + File.separator + DATABASE_NAME, null, DATABASE_VERSION );
+
+		SQLiteDatabase.openOrCreateDatabase(Utils.MEMORY_FOLDER
+				+ File.separator + DATABASE_NAME, null);
     }
 
 	public void saveAliFeeling ( int feeling, String note, long date, String emoji )

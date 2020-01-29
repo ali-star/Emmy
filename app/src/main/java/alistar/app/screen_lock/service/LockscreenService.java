@@ -67,7 +67,9 @@ public class LockscreenService extends Service
 		{
             if ( null != mLockscreenReceiver )
 			{
-                unregisterReceiver ( mLockscreenReceiver );
+			    try {
+                    unregisterReceiver(mLockscreenReceiver);
+                } catch (Exception ignored) {}
             }
         }
     }

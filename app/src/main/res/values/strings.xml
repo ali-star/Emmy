@@ -3,12 +3,12 @@
 
     <string name="app_name">Sara</string>
     <string name="hello_world">Hello world!</string>
-	<string name="kws_caption">To start demonstration say \"oh mighty computer\".</string>
+    <string name="kws_caption">To start demonstration say \"oh mighty computer\".</string>
     <string name="menu_caption">Say \"digits\", \"forecast\" or \"phones\" to choose the grammar, language model or phonetic decoder example.</string>
     <string name="digits_caption">To try recognition of digits: say something like \"one two three four five\".</string>
     <string name="forecast_caption">To try recognition of a weather forecast like \"sunny spells on Wednesday\".</string>
     <string name="phone_caption">To try phonetic recognition say anything.</string>
-	<string name="engine_app_name">VoR Engine ~ Voice Recognition Engine</string>
+    <string name="engine_app_name">VoR Engine ~ Voice Recognition Engine</string>
     <string name="engine_empty"> . . . </string>
     <string name="engine_main_details">On development. Recognize number from 0 to 9.</string>
     <string name="engine_on_beginning_of_speech">Speak now</string>
@@ -18,7 +18,7 @@
     <!--string name="engine_on_partial_result">Didn\'t catch that. Try speaking again.</string-->
     <string name="engine_on_partial_result">SPEAK NOW</string>
     <string name="engine_on_result">Final result</string>
-	<string name="BLANK"></string>
+    <string name="BLANK"></string>
     <string name="STrain">Train</string>
     <string name="SViewAll">View all faces</string>
     <string name="SSearch">Search</string>
@@ -33,7 +33,7 @@
     <string name="SSearching">Searching</string>
     <string name="SFrontCamera">Front Camera</string>
     <string name="SBackCamera">Back Camera</string>
-	
-    
-	
+    <string name="title_activity_treasury">TreasuryActivity</string>
+
+
 </resources>
