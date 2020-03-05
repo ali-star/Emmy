@@ -67,8 +67,8 @@
 			<Button
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:text="Resize"
-				android:id="@+id/btn_resize"/>
+				android:text="Treasury"
+				android:id="@+id/btn_treasury"/>
 			
 			<Button
 				android:layout_height="wrap_content"

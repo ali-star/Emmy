@@ -6,7 +6,6 @@ import android.widget.*;
 import android.view.View.*;
 import android.view.*;
 import com.readystatesoftware.notificationlog.*;
-
 import android.graphics.*;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,22 +13,17 @@ import android.content.ServiceConnection;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.*;
-
 import alistar.app.alarm.*;
-
 import android.graphics.drawable.*;
 import java.text.*;
 import java.util.*;
-
 import alistar.app.brain.anomalyDetection.anomaly.DetectAnoms;
 import alistar.app.map.*;
 import com.nanotasks.*;
 import alistar.app.brain.*;
-
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import alistar.app.screen_lock.service.*;
 import alistar.app.screen_lock.*;
 import su.levenetc.android.badgeview.BadgeView;
@@ -647,31 +641,24 @@ public class MainActivity extends Activity
 		badgeView.setValue("checking crashes...");
 
 		File directory = new File(Utils.CRASH_FOLDER);
+		if (!directory.exists())
+			directory.mkdirs();
 		File[] files = directory.listFiles();
 		Log.d("Files", "Size: "+ files.length);
 		crashCount = 0;
-		for (int i = 0; i < files.length; i++)
-		{
+		for (int i = 0; i < files.length; i++) {
 			Log.d("Files", "FileName:" + files[i].getName());
-
 			String crash = utils.readFile(files[i].getPath());
-			if(crash.indexOf("check_ok")<0)
-			{
+			if(crash.indexOf("check_ok")<0) {
 				crashCount++;
 			}
-			new Handler().postDelayed(new Runnable()
-				{
-
-					@Override
-					public void run ( )
-					{
-						badgeView.setValue(String.valueOf(crashCount));
-					}
-
-
-				}, 1000);
-
 		}
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run () {
+				badgeView.setValue(String.valueOf(crashCount));
+			}
+		}, 1000);
 	}
 	
 

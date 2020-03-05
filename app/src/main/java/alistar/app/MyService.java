@@ -5,9 +5,13 @@ import android.app.*;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.os.*;
+import android.provider.Telephony;
+import android.telephony.SmsMessage;
 import android.widget.*;
 import android.location.*;
 
+import com.google.code.regexp.Matcher;
+import com.google.code.regexp.Pattern;
 import com.readystatesoftware.notificationlog.Log;
 
 import androidx.core.app.*;
@@ -25,6 +29,11 @@ import com.google.android.gms.maps.model.*;
 
 import alistar.app.screen_lock.*;
 import alistar.app.ear.*;
+import alistar.app.treasury.TreasuryReceipt;
+import alistar.app.treasury.TreasuryRegex;
+import alistar.app.utils.date.CivilDate;
+import alistar.app.utils.date.DateConverter;
+import alistar.app.utils.date.PersianDate;
 
 import java.io.*;
 
@@ -56,6 +65,7 @@ public class MyService extends Service {
 	private OnLocationFoundListener locationFoundListener;
 	private RecMicToMp3 mRecMicToMp3;
 	private BroadcastReceiver musicPlayReceiver;
+	private BroadcastReceiver smsListenerBroadcast;
 
 	public class ServiceBinder extends Binder {
 		public MyService getService() {
@@ -147,6 +157,88 @@ public class MyService extends Service {
 
 
 		}, musicChangeFilter);
+
+		IntentFilter smsListenerIntentFilter = new IntentFilter();
+		smsListenerIntentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+
+		registerReceiver(smsListenerBroadcast = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if(Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())){
+					Bundle bundle = intent.getExtras();
+					SmsMessage[] smsMessage = null;
+					String msg_from;
+					if (bundle != null){
+						try{
+							Object[] pdus = (Object[]) bundle.get("pdus");
+							smsMessage = new SmsMessage[pdus.length];
+							StringBuilder messageBody = new StringBuilder();
+							for(int i=0; i<smsMessage.length; i++){
+								smsMessage[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
+								msg_from = smsMessage[i].getOriginatingAddress();
+								messageBody.append(smsMessage[i].getMessageBody());
+							}
+
+							Matcher accountNumberMatcher = TreasuryRegex.INSTANCE.getAccountNumberInWithdrawalRegex().matcher(messageBody.toString());
+							TreasuryReceipt.Event event;
+							if (!accountNumberMatcher.find()) {
+								accountNumberMatcher = TreasuryRegex.INSTANCE.getAccountNumberInDepositRegex().matcher(messageBody.toString());
+								if (!accountNumberMatcher.find()) {
+									return;
+								} else {
+									event = TreasuryReceipt.Event.DEPOSIT;
+								}
+							} else {
+								event = TreasuryReceipt.Event.WITHDRAWAL;
+							}
+
+							TreasuryReceipt receipt = new TreasuryReceipt();
+							receipt.setAccountNumber(accountNumberMatcher.group("AccountNumber"));
+							receipt.setCardNumber("5022291074251834");
+							receipt.setEvent(event);
+
+							Matcher amountMatcher = TreasuryRegex.INSTANCE.getAmountRegex().matcher(messageBody.toString());
+							amountMatcher.find();
+							int amount = Integer.parseInt(amountMatcher.group("Amount").replaceAll(",", ""));
+							if (event == TreasuryReceipt.Event.WITHDRAWAL)
+								amount = -amount;
+							receipt.setAmount(amount);
+
+							Matcher inventoryMatcher = TreasuryRegex.INSTANCE.getInventoryRegex().matcher(messageBody.toString());
+							inventoryMatcher.find();
+							int inventory = Integer.parseInt(inventoryMatcher.group("Inventory").replaceAll(",", ""));
+							receipt.setInventory(inventory);
+
+							Matcher timeAndDateMatcher = TreasuryRegex.INSTANCE.getTimeAndDateRegex().matcher(messageBody.toString());
+							timeAndDateMatcher.find();
+							int persianYear = Integer.parseInt("13" + timeAndDateMatcher.group("Year"));
+							int persianMonth = Integer.parseInt(timeAndDateMatcher.group("Month"));
+							int persianDay = Integer.parseInt(timeAndDateMatcher.group("Day"));
+							int hour = Integer.parseInt(timeAndDateMatcher.group("Hour"));
+							int minute = Integer.parseInt(timeAndDateMatcher.group("Minute"));
+							PersianDate persianDate = new PersianDate(persianYear, persianMonth, persianDay);
+							CivilDate civilDate = DateConverter.persianToCivil(persianDate);
+							Calendar calendar = Calendar.getInstance();
+							calendar.set(civilDate.getYear(), civilDate.getMonth() - 1, civilDate.getDayOfMonth(), hour, minute);
+							receipt.setDate(new Date(calendar.getTimeInMillis()));
+
+							receipt.setReceipt(messageBody.toString());
+
+							Memory memory = new Memory(getApplicationContext());
+							memory.saveTreasuryReceipt(receipt);
+							memory.close();
+
+							memory = new Memory(getApplicationContext());
+							List<TreasuryReceipt> data = memory.getTreasuryReceipts(10, 0);
+							memory.close();
+
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}, smsListenerIntentFilter);
 	}
 
 	@Override
@@ -711,8 +803,7 @@ public class MyService extends Service {
 		mRecMicToMp3.start();
 	}
 	
-	public boolean isRecordingVoice ( )
-	{
+	public boolean isRecordingVoice () {
 		if (mRecMicToMp3 != null )
 		{
 			return mRecMicToMp3.isRecording();
@@ -720,8 +811,7 @@ public class MyService extends Service {
 		return false;
 	}
 	
-	public void stopVoiceRecord ( )
-	{
+	public void stopVoiceRecord () {
 		if ( mRecMicToMp3 != null)
 			mRecMicToMp3.stop();
 	}

@@ -11,18 +11,20 @@ import alistar.app.Utils;
 import alistar.app.map.*;
 import com.google.android.gms.maps.model.*;
 import alistar.app.timeline.*;
+import alistar.app.treasury.TreasuryReceipt;
 
 public class Memory extends SQLiteOpenHelper
 {
 
     public static final String DATABASE_NAME = "saraMemory.db";
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 14;
     public static final String TABLE_DATA = "data";
     public static final String TABLE_PLACES = "places";
     public static final String TABLE_MOMENTS = "moments";
     public static final String TABLE_LOCATION_HISTORY = "location_history";
     public static final String TABLE_EMOTIONS = "emotions";
-    public static final String TABLE_SIMCARDS = "simcards";
+	public static final String TABLE_SIMCARDS = "simcards";
+	public static final String TABLE_TREASURY = "treasury";
     public static final String TABLE_ALI_EMOTIONS = "ali_emotions";
     public static final String KEY_ID = "id";
     public static final String KEY_DATE = "date";
@@ -41,30 +43,32 @@ public class Memory extends SQLiteOpenHelper
     public static final String KEY_MAP_MARKER_ID = "map_marker_id";
     public static final String KEY_ACCURACY = "accuracy";
     public static final String KEY_EMOJI = "emoji";
-    public static final String KEY_SERIAL = "serial";
+	public static final String KEY_SERIAL = "serial";
+	public static final String KEY_ACCOUNT_NUMBER = "account_number";
+	public static final String KEY_CARD_NUMBER = "card_number";
+	public static final String KEY_EVENT = "event";
+	public static final String KEY_AMOUNT = "amount";
+	public static final String KEY_INVENTORY = "inventory";
+	public static final String KEY_RECEIPT = "receipt";
 
-
-	@Override
-	public void onCreate ( SQLiteDatabase db )
-	{
-		String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DATA + "("
+	String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DATA + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
 			+ KEY_PHONE_NUMBER + " TEXT" + ")";
 
-		String CREATE_MOMENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_MOMENTS + "("
+	String CREATE_MOMENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_MOMENTS + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_EMOJI + " TEXT,"
 			+ KEY_NOTE + " TEXT,"
 			+ KEY_DATE + " TEXT" + ")";
 
-		String CREATE_ALI_EMOTIONS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_ALI_EMOTIONS + "("
+	String CREATE_ALI_EMOTIONS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_ALI_EMOTIONS + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_FEELING + " TEXT,"
 			+ KEY_DATE + " TEXT,"
 			+ KEY_NOTE + " TEXT,"
 			+ KEY_EMOJI + " TEXT" + ")";
 
-		String CREATE_PLACES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PLACES + "("
+	String CREATE_PLACES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PLACES + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_NAME + " TEXT,"
 			+ KEY_LATITUDE + " TEXT,"
@@ -74,7 +78,7 @@ public class Memory extends SQLiteOpenHelper
 			+ KEY_ALART + " TEXT,"
 			+ KEY_STAR + " TEXT" + ")";
 
-		String CREATE_LOCATION_HISORY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_LOCATION_HISTORY + "("
+	String CREATE_LOCATION_HISORY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_LOCATION_HISTORY + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_MAP_MARKER_ID + " TEXT,"
 			+ KEY_LATITUDE + " TEXT,"
@@ -82,9 +86,23 @@ public class Memory extends SQLiteOpenHelper
 			+ KEY_ACCURACY + " TEXT,"
 			+ KEY_DATE + " TEXT" + ")";
 
-		String CREATE_SIMCARDS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_SIMCARDS + "("
+	String CREATE_SIMCARDS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_SIMCARDS + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_SERIAL + " TEXT" + ")";
+
+	String CREATE_TREASURY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_TREASURY + "("
+			+ KEY_ID + " INTEGER PRIMARY KEY,"
+			+ KEY_ACCOUNT_NUMBER + " TEXT,"
+			+ KEY_CARD_NUMBER + " TEXT,"
+			+ KEY_EVENT + " TEXT,"
+			+ KEY_AMOUNT + " INT,"
+			+ KEY_INVENTORY + " BIGINT,"
+			+ KEY_DATE + " BIGINT,"
+			+ KEY_RECEIPT + " TEXT" + ")";
+
+	@Override
+	public void onCreate ( SQLiteDatabase db )
+	{
 
 		db.execSQL ( CREATE_CONTACTS_TABLE );
 		db.execSQL ( CREATE_ALI_EMOTIONS_TABLE );
@@ -92,23 +110,24 @@ public class Memory extends SQLiteOpenHelper
 		db.execSQL ( CREATE_LOCATION_HISORY_TABLE );
 		db.execSQL ( CREATE_MOMENTS_TABLE );
 		db.execSQL ( CREATE_SIMCARDS_TABLE );
+		db.execSQL ( CREATE_TREASURY_TABLE );
 	}
 
 	@Override
-	public void onUpgrade ( SQLiteDatabase db, int p2, int p3 )
+	public void onUpgrade ( SQLiteDatabase db, int oldVersion, int newVersion )
 	{
 		// TODO: Implement this method
 		//db.execSQL("ALTER TABLE " + TABLE_LOCATION_HISTORY + " ADD " + KEY_ACCURACY + " TEXT");
-		onCreate ( db );
+		if (oldVersion == 12) {
+			db.execSQL ( CREATE_TREASURY_TABLE );
+		} else if (oldVersion == 13) {
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_TREASURY);
+			db.execSQL ( CREATE_TREASURY_TABLE );
+		}
 	}
 
-	public Memory ( Context context )
-	{
-		super ( context, Utils.MEMORY_FOLDER
-			   + File.separator + DATABASE_NAME, null, DATABASE_VERSION );
-
-		SQLiteDatabase.openOrCreateDatabase(Utils.MEMORY_FOLDER
-				+ File.separator + DATABASE_NAME, null);
+	public Memory ( Context context ) {
+		super ( new DatabaseContext(context), DATABASE_NAME, null, DATABASE_VERSION );
     }
 
 	public void saveAliFeeling ( int feeling, String note, long date, String emoji )
@@ -132,7 +151,7 @@ public class Memory extends SQLiteOpenHelper
 		Cursor cursor = db.rawQuery ( "SELECT * FROM " + TABLE_ALI_EMOTIONS + " ORDER BY " + KEY_ID + " DESC LIMIT " + count, null );
 
 		if ( !cursor.moveToFirst ( ) )
-			return null;
+			return data;
 
 		for ( int i=0; i < cursor.getCount ( ); i++ )
 		{
@@ -499,6 +518,43 @@ public class Memory extends SQLiteOpenHelper
         Cursor c = database.rawQuery ( "SELECT * FROM " + table, null );
         return c.getCount ( ) > 0;
     }
+
+    public void saveTreasuryReceipt(TreasuryReceipt receipt) {
+		SQLiteDatabase database = getWritableDatabase();
+
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(KEY_ACCOUNT_NUMBER, receipt.getAccountNumber());
+		contentValues.put(KEY_CARD_NUMBER, receipt.getCardNumber());
+		contentValues.put(KEY_EVENT, receipt.getEvent().getName());
+		contentValues.put(KEY_AMOUNT, receipt.getAmount());
+		contentValues.put(KEY_INVENTORY, receipt.getInventory());
+		contentValues.put(KEY_DATE, receipt.getDate().getTime());
+		contentValues.put(KEY_RECEIPT, receipt.getReceipt());
+
+		database.insert(TABLE_TREASURY, null, contentValues);
+	}
+
+	public List<TreasuryReceipt> getTreasuryReceipts(int limit, int offset) {
+		SQLiteDatabase database = getWritableDatabase();
+		List<TreasuryReceipt> data = new ArrayList<>();
+		Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_TREASURY + " ORDER BY " + KEY_DATE + " DESC LIMIT " + limit + " OFFSET " + offset, null);
+		if (cursor.moveToFirst()) {
+			for (int i = 0; i< cursor.getCount(); i++) {
+				TreasuryReceipt receipt = new TreasuryReceipt();
+				receipt.setId(cursor.getInt(0));
+				receipt.setAccountNumber(cursor.getString(1));
+				receipt.setCardNumber(cursor.getString(2));
+				receipt.setEvent(TreasuryReceipt.Event.getByName(cursor.getString(3)));
+				receipt.setAmount(cursor.getInt(4));
+				receipt.setInventory(cursor.getInt(5));
+				receipt.setDate(new Date(cursor.getLong(6)));
+				receipt.setReceipt(cursor.getString(7));
+				data.add(receipt);
+			}
+		}
+		cursor.close();
+		return data;
+	}
 
 
 }

@@ -61,8 +61,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".treasury.TreasuryActivity"
-            android:label="@string/title_activity_treasury"
-            android:theme="@style/NoActionBar.NoActionBar"/>
+            android:label="@string/title_activity_treasury"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -194,7 +193,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="---" />
+            android:value="AIzaSyCrxG_UhyZ7ghC1lap_oZu7_RsmUTBUpmc" />
 
         <activity android:name=".ear.RecordingActivity" />
         <activity android:name=".SpeechRecognizerActivity" />

@@ -12,6 +12,7 @@ import alistar.app.alarm.*;
 import android.widget.*;
 
 import alistar.app.ear.RecordingActivity;
+import alistar.app.treasury.TreasuryActivity;
 import alistar.app.voice_recognizer.*;
 import alistar.app.music.*;
 import alistar.app.screen_lock.*;
@@ -213,81 +214,13 @@ public class DevelopDialog extends Dialog
 				
 				
 			});
-		findViewById(R.id.btn_resize).setOnClickListener(new View.OnClickListener()
+		findViewById(R.id.btn_treasury).setOnClickListener(new View.OnClickListener()
 			{
 
 				@Override
 				public void onClick(View p1)
 				{
-					// TODO: Implement this method
-					DialogProperties properties=new DialogProperties();
-					properties.selection_mode = DialogConfigs.MULTI_MODE;
-					properties.selection_type = DialogConfigs.FILE_SELECT;
-					properties.root = new File(DialogConfigs.DEFAULT_DIR);
-					properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
-					properties.extensions = null;
-					FilePickerDialog dialog = new FilePickerDialog(a, properties);
-					dialog.setTitle("Select a File");
-					dialog.setDialogSelectionListener(new DialogSelectionListener() {
-							@Override
-							public void onSelectedFilePaths(final String[] files)
-							{
-								//files is the array of the paths of files selected by the Application User.
-								Tasks.executeInBackground(a, new BackgroundWork<String>() {
-										@Override
-										public String doInBackground() throws Exception {
-											//final int DELAY = 3;
-											//Thread.sleep(TimeUnit.SECONDS.toMillis(DELAY));
-											StringBuilder sb = new StringBuilder();
-											for(int i = 0; i<files.length; i++)
-											{
-												sb.append(utils.convertFormatName(files[i], ".png") + "\n");
-											}
-											File f = new File(Utils.EMOJI_FOLDER + "list.txt");
-											if(!f.exists())
-											{
-												f.createNewFile();
-											}
-											utils.writeStringToFile(sb.toString(), f);
-											Log.d("files", "resizing images");
-											File file = new File(Utils.EMOJI_FOLDER);
-											if(!file.exists())
-											{
-												file.mkdirs();
-											}
-											for (int i=0; i < files.length; i++)
-											{
-												try
-												{
-													
-													utils.saveBitmap(utils.resizeBitmap(files[i], 190, 190), Utils.EMOJI_FOLDER + utils.convertFormatName(files[i], ".png"));
-												}
-												catch(Exception e)
-												{
-													e.printStackTrace();
-													Log.d("files", "error in "+files[i]);
-												}
-												
-											}
-											return null;
-										}
-									}, new Completion<String>() {
-										@Override
-										public void onSuccess(Context context, String result) {
-
-											Log.d("files", "done");
-										}
-
-										@Override
-										public void onError(Context context, Exception e) {
-											Log.d("files", "error");
-											Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-
-										}
-									});
-							}
-						});
-					dialog.show();
+					getContext().startActivity(new Intent(getContext(), TreasuryActivity.class));
 				}
 
 
