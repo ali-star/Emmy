@@ -40,6 +40,10 @@ public class DatabaseContext extends ContextWrapper {
     /* this version is called for android devices >= api-11. thank to @damccull for fixing this. */
     @Override
     public SQLiteDatabase openOrCreateDatabase(String name, int mode, SQLiteDatabase.CursorFactory factory, DatabaseErrorHandler errorHandler) {
-        return openOrCreateDatabase(name, mode, factory);
+        final SQLiteDatabase result = SQLiteDatabase.openOrCreateDatabase(getDatabasePath(name), null);
+        if (Log.isLoggable(DatabaseContext.DEBUG_CONTEXT, Log.WARN)) {
+            Log.w(DatabaseContext.DEBUG_CONTEXT, "openOrCreateDatabase(" + name + ",,) = " + result.getPath());
+        }
+        return result;
     }
 }

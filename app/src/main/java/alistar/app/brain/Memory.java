@@ -17,7 +17,7 @@ public class Memory extends SQLiteOpenHelper
 {
 
     public static final String DATABASE_NAME = "saraMemory.db";
-    public static final int DATABASE_VERSION = 14;
+    public static final int DATABASE_VERSION = 13;
     public static final String TABLE_DATA = "data";
     public static final String TABLE_PLACES = "places";
     public static final String TABLE_MOMENTS = "moments";
@@ -119,9 +119,6 @@ public class Memory extends SQLiteOpenHelper
 		// TODO: Implement this method
 		//db.execSQL("ALTER TABLE " + TABLE_LOCATION_HISTORY + " ADD " + KEY_ACCURACY + " TEXT");
 		if (oldVersion == 12) {
-			db.execSQL ( CREATE_TREASURY_TABLE );
-		} else if (oldVersion == 13) {
-			db.execSQL("DROP TABLE IF EXISTS " + TABLE_TREASURY);
 			db.execSQL ( CREATE_TREASURY_TABLE );
 		}
 	}
