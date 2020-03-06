@@ -228,9 +228,7 @@ public class MyService extends Service {
 							memory.saveTreasuryReceipt(receipt);
 							memory.close();
 
-							memory = new Memory(getApplicationContext());
-							List<TreasuryReceipt> data = memory.getTreasuryReceipts(10, 0);
-							memory.close();
+							Toast.makeText(getApplicationContext(), String.valueOf(receipt.getAmount()), Toast.LENGTH_LONG).show();
 
 						} catch(Exception e) {
 							e.printStackTrace();

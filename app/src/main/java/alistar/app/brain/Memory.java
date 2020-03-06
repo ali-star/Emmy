@@ -3,27 +3,27 @@ import android.database.sqlite.*;
 import android.content.*;
 import com.readystatesoftware.notificationlog.*;
 
-import java.io.File;
 import java.util.*;
 import android.database.*;
 
-import alistar.app.Utils;
 import alistar.app.map.*;
 import com.google.android.gms.maps.model.*;
 import alistar.app.timeline.*;
+import alistar.app.treasury.BankAccount;
 import alistar.app.treasury.TreasuryReceipt;
 
 public class Memory extends SQLiteOpenHelper
 {
 
     public static final String DATABASE_NAME = "saraMemory.db";
-    public static final int DATABASE_VERSION = 13;
+    public static final int DATABASE_VERSION = 14;
     public static final String TABLE_DATA = "data";
     public static final String TABLE_PLACES = "places";
     public static final String TABLE_MOMENTS = "moments";
     public static final String TABLE_LOCATION_HISTORY = "location_history";
     public static final String TABLE_EMOTIONS = "emotions";
 	public static final String TABLE_SIMCARDS = "simcards";
+	public static final String TABLE_BANK_ACCOUNTS = "bank_accounts";
 	public static final String TABLE_TREASURY = "treasury";
     public static final String TABLE_ALI_EMOTIONS = "ali_emotions";
     public static final String KEY_ID = "id";
@@ -50,6 +50,7 @@ public class Memory extends SQLiteOpenHelper
 	public static final String KEY_AMOUNT = "amount";
 	public static final String KEY_INVENTORY = "inventory";
 	public static final String KEY_RECEIPT = "receipt";
+	public static final String KEY_DEFAULT = "_default";
 
 	String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DATA + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
@@ -78,7 +79,7 @@ public class Memory extends SQLiteOpenHelper
 			+ KEY_ALART + " TEXT,"
 			+ KEY_STAR + " TEXT" + ")";
 
-	String CREATE_LOCATION_HISORY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_LOCATION_HISTORY + "("
+	String CREATE_LOCATION_HISTORY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_LOCATION_HISTORY + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_MAP_MARKER_ID + " TEXT,"
 			+ KEY_LATITUDE + " TEXT,"
@@ -89,6 +90,12 @@ public class Memory extends SQLiteOpenHelper
 	String CREATE_SIMCARDS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_SIMCARDS + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_SERIAL + " TEXT" + ")";
+
+	String CREATE_BANK_ACCOUNTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_BANK_ACCOUNTS + "("
+			+ KEY_ID + " INTEGER PRIMARY KEY,"
+			+ KEY_ACCOUNT_NUMBER + " TEXT,"
+			+ KEY_CARD_NUMBER + " TEXT,"
+			+ KEY_DEFAULT + " INTEGER)";
 
 	String CREATE_TREASURY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_TREASURY + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY,"
@@ -107,9 +114,10 @@ public class Memory extends SQLiteOpenHelper
 		db.execSQL ( CREATE_CONTACTS_TABLE );
 		db.execSQL ( CREATE_ALI_EMOTIONS_TABLE );
 		db.execSQL ( CREATE_PLACES_TABLE );
-		db.execSQL ( CREATE_LOCATION_HISORY_TABLE );
+		db.execSQL (CREATE_LOCATION_HISTORY_TABLE);
 		db.execSQL ( CREATE_MOMENTS_TABLE );
 		db.execSQL ( CREATE_SIMCARDS_TABLE );
+		db.execSQL ( CREATE_BANK_ACCOUNTS_TABLE );
 		db.execSQL ( CREATE_TREASURY_TABLE );
 	}
 
@@ -120,6 +128,8 @@ public class Memory extends SQLiteOpenHelper
 		//db.execSQL("ALTER TABLE " + TABLE_LOCATION_HISTORY + " ADD " + KEY_ACCURACY + " TEXT");
 		if (oldVersion == 12) {
 			db.execSQL ( CREATE_TREASURY_TABLE );
+		} else if (oldVersion == 13) {
+			db.execSQL( CREATE_BANK_ACCOUNTS_TABLE );
 		}
 	}
 
@@ -531,10 +541,10 @@ public class Memory extends SQLiteOpenHelper
 		database.insert(TABLE_TREASURY, null, contentValues);
 	}
 
-	public List<TreasuryReceipt> getTreasuryReceipts(int limit, int offset) {
+	public List<TreasuryReceipt> getTreasuryReceipts(String accountNumber, int limit, int offset) {
 		SQLiteDatabase database = getWritableDatabase();
 		List<TreasuryReceipt> data = new ArrayList<>();
-		Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_TREASURY + " ORDER BY " + KEY_DATE + " DESC LIMIT " + limit + " OFFSET " + offset, null);
+		Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_TREASURY + " WHERE " + KEY_ACCOUNT_NUMBER + " = " + accountNumber + " ORDER BY " + KEY_DATE + " DESC LIMIT " + limit + " OFFSET " + offset, null);
 		if (cursor.moveToFirst()) {
 			for (int i = 0; i< cursor.getCount(); i++) {
 				TreasuryReceipt receipt = new TreasuryReceipt();
@@ -553,5 +563,35 @@ public class Memory extends SQLiteOpenHelper
 		return data;
 	}
 
+	public void saveBankAccount(BankAccount bankAccount) {
+		SQLiteDatabase database = getWritableDatabase();
+
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(KEY_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
+		contentValues.put(KEY_CARD_NUMBER, bankAccount.getCardNumber());
+		contentValues.put(KEY_DEFAULT, bankAccount.isDefault() ? 1 : 0);
+
+		database.insert(TABLE_BANK_ACCOUNTS, null, contentValues);
+	}
+
+	public List<BankAccount> getBanAccounts() {
+		List<BankAccount> data = new ArrayList<>();
+
+		SQLiteDatabase database = getWritableDatabase();
+		Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_BANK_ACCOUNTS, null);
+		if (cursor.moveToFirst()) {
+			for (int i = 0; i < cursor.getCount(); i++) {
+				BankAccount bankAccount = new BankAccount();
+				bankAccount.setId(cursor.getInt(0));
+				bankAccount.setAccountNumber(cursor.getString(1));
+				bankAccount.setCardNumber(cursor.getString(2));
+				bankAccount.setDefault(cursor.getInt(3) == 1);
+				data.add(bankAccount);
+			}
+		}
+		cursor.close();
+
+		return data;
+	}
 
 }
